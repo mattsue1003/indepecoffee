@@ -25,10 +25,10 @@
     overflow:hidden;
     -webkit-text-size-adjust:100%;
   }
-  /* ===== 桌機／投影機：16:9 橫式投影片 ===== */
-  @media(min-width:768px) and (min-aspect-ratio:13/10){
+  /* ===== 桌機／投影機：置中閱讀欄、單欄上下滑 ===== */
+  @media(min-width:768px){
     body{
-      display:flex;align-items:center;justify-content:center;
+      display:flex;align-items:flex-start;justify-content:center;
       background:#16120d;
       background-image:
         radial-gradient(circle at 12% 15%, rgba(201,150,47,.07) 0 2px, transparent 3px),
@@ -37,91 +37,25 @@
       padding:0;
     }
     .stage{
-      width:min(100vw, calc(100dvh * 16 / 9));
-      height:min(100dvh, calc(100vw * 9 / 16)) !important;
-      max-width:1600px;max-height:900px;
-      border:6px solid var(--gold);
-      box-shadow:0 24px 80px rgba(0,0,0,.65);
+      width:min(100vw,920px);
+      height:100dvh !important;
+      border-left:5px solid var(--gold);
+      border-right:5px solid var(--gold);
+      box-shadow:0 0 80px rgba(0,0,0,.6);
     }
-    .slide{padding:46px 64px 92px;}
-    .slide .eyebrow{font-size:19px;padding:8px 18px;margin-bottom:16px;}
-    h2.subtitle{font-size:clamp(30px,3vw,42px);margin-bottom:20px;}
-    .lead{font-size:clamp(19px,1.55vw,23px);line-height:1.65;}
-    .card h3{font-size:clamp(21px,1.65vw,24px);margin-bottom:7px;}
-    .card p{font-size:clamp(16px,1.32vw,18px);line-height:1.62;}
-    .card .meta{font-size:clamp(14px,1.18vw,16px);margin-top:8px;}
-    .point .ptx{font-size:clamp(17px,1.45vw,20px);}
-    .point{margin-bottom:12px;}
-
-    /* 內容頁：標題橫幅在上，卡片區雙欄 */
-    .slide-body{column-count:2;column-gap:30px;width:100%;}
-    .slide-body>*{break-inside:avoid;-webkit-column-break-inside:avoid;}
-    .srow{break-inside:avoid;-webkit-column-break-inside:avoid;}
-    .card{margin-bottom:16px;padding:18px 22px;}
-
-    /* 目錄：雙欄整齊 */
-    .slide.no-col .slide-body{column-count:1;}
-    .toc-list{display:grid;grid-template-columns:1fr 1fr;column-gap:28px;row-gap:13px;}
-    .toc-list .toc-item{margin-bottom:0;padding:13px 16px;}
-    .toc-item .tx{font-size:20px;}
-    .toc-item .tx small{font-size:14px;}
-    .toc-num{width:46px;height:46px;font-size:22px;}
-    .slide.no-col h2.subtitle{margin-bottom:18px;}
-
-    /* ===== 封面：置中、大方的標題頁 ===== */
-    .slide.cover{
-      display:flex;flex-direction:column;
-      align-items:center;justify-content:center;justify-content:safe center;
-      text-align:center;
-      padding:50px 64px 96px;
-    }
-    .slide.cover.active{display:flex;}
-    .slide.cover .slide-body{
-      column-count:1;
-      display:flex;flex-direction:column;align-items:center;justify-content:center;
-      width:100%;max-width:1000px;
-      text-align:center;
-    }
-    .slide.cover .cover-art{display:none;}
-    .cover .big-emoji{display:block;font-size:72px;margin-bottom:14px;line-height:1;}
-    .cover .brandline{
-      font-size:19px;margin-bottom:20px;letter-spacing:3px;
-    }
-    .cover h1.title{
-      font-size:clamp(58px,6vw,90px);line-height:1.12;margin-bottom:24px;text-align:center;
-    }
-    .cover .lead{
-      font-size:clamp(20px,1.7vw,25px);text-align:center;max-width:760px;margin:0 auto 26px;line-height:1.7;
-    }
-    .cover .who{
-      margin-top:0;font-size:19px;text-align:center;line-height:2;
-    }
-    .cover .hint{display:none;}
-
-    /* 聯絡頁：置中、單欄 */
-    .slide.cover#sec-contact,
-    .slide.cover#sec-contact.active{
-      display:flex;flex-direction:column;align-items:center;justify-content:center;justify-content:safe center;
-      padding:20px 64px 90px;text-align:center;
-    }
-    .slide.cover#sec-contact::after,
-    .slide.cover#sec-contact .cover-art{display:none;}
-    #sec-contact .big-emoji{display:block;font-size:40px;margin-bottom:2px;}
-    #sec-contact .slide-body{width:100%;max-width:760px;}
-    #sec-contact .eyebrow{margin-bottom:10px;}
-    #sec-contact h2.subtitle{margin-bottom:12px;}
-    #sec-contact .lead{margin-top:10px !important;}
-    #sec-contact .card{margin:12px auto 0;padding:16px 20px;max-width:680px !important;}
-    #sec-contact .calls{flex-wrap:nowrap;}
-    #sec-contact .lead:last-child{margin-top:12px !important;}
-
-    .nav{height:74px;}
-    .nav #prev,.nav #next{width:auto;height:auto;border-radius:0;padding:11px 26px;font-size:20px;}
+    /* 桌機字級加大一點，方便投影 */
+    .slide{padding:40px 56px 96px;}
+    h1.title{font-size:clamp(44px,7vw,64px);}
+    h2.subtitle{font-size:clamp(28px,4vw,36px);}
+    .lead{font-size:clamp(18px,2.4vw,22px);}
+    .card h3{font-size:clamp(20px,2.6vw,23px);}
+    .card p{font-size:clamp(16px,2.2vw,18px);}
+    .nav{height:76px;}
+    .nav #prev,.nav #next{width:auto;height:auto;border-radius:0;padding:12px 26px;font-size:20px;}
     .nav #prev .lbl,.nav #next .lbl{display:inline;}
     .nav #prev .arr,.nav #next .arr{font-size:20px;margin-top:0;}
-    .nav .nbtn.home{width:auto;height:auto;border-radius:0;padding:11px 18px;font-size:21px;}
+    .nav .nbtn.home{width:auto;height:auto;border-radius:0;padding:12px 18px;font-size:21px;}
     .bar{width:220px;}
-    .stamp{width:92px;height:92px;font-size:15px;top:30px;right:38px;}
   }
 
   /* 舞台 */
@@ -222,11 +156,6 @@
 
   /* 封面 */
   .cover{justify-content:center;justify-content:safe center;align-items:center;text-align:center;}
-  .cover .slide-body{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    width:100%;min-height:100%;
-  }
-  .cover .cover-art{display:none;}
   .cover .brandline{
     font-size:15px;font-weight:800;color:var(--green);
     letter-spacing:2px;margin-bottom:16px;
@@ -453,15 +382,12 @@
 
   <!-- 1 封面 -->
   <section class="slide active cover">
-    <div class="slide-body">
-      <div class="big-emoji">🏡</div>
-      <div class="brandline">愛迪樂居家職能治療所 ｜ 社區生活重建</div>
-      <h1 class="title">自立生活<br>由你做主</h1>
-      <p class="lead">在社區裡安心生活，<strong>你不需要一個人撐著</strong>。<br>今天我們一起認識，南桃園可以陪你的資源。</p>
-      <div class="who">精障朋友 × 社區長輩　共融活動<br>中壢・平鎮・楊梅・龍潭一帶</div>
-      <div class="hint" onclick="next()">點「下一頁」開始 ↓</div>
-    </div>
-    <div class="cover-art">🏡</div>
+    <div class="big-emoji">🏡</div>
+    <div class="brandline">愛迪樂居家職能治療所 ｜ 社區生活重建</div>
+    <h1 class="title">自立生活<br>由你做主</h1>
+    <p class="lead">在社區裡安心生活，<strong>你不需要一個人撐著</strong>。<br>今天我們一起認識，南桃園可以陪你的資源。</p>
+    <div class="who">精障朋友 × 社區長輩　共融活動<br>中壢・平鎮・楊梅・龍潭一帶</div>
+    <div class="hint" onclick="next()">點「下一頁」開始 ↓</div>
   </section>
 
   <!-- 1.3 講師介紹 -->
@@ -1144,56 +1070,8 @@
 </div>
 
 <script>
-  // 自動把每張投影片的內容區包進 .slide-body（供桌機16:9分欄鋪排）
-  (function wrapBodies(){
-    document.querySelectorAll('.slide').forEach(slide=>{
-      if(slide.querySelector('.slide-body'))return;
-      const kids=[...slide.children];
-      // 標題群：stamp / eyebrow / h1 / h2 / 開場第一段 lead 或 kicker 保留在上方
-      let headEnd=0;
-      for(let i=0;i<kids.length;i++){
-        const el=kids[i];
-        const isHead = el.classList.contains('stamp')||el.classList.contains('eyebrow')
-          ||el.tagName==='H1'||el.tagName==='H2'||el.classList.contains('kicker')
-          ||(el.classList.contains('lead') && i<=3);
-        if(isHead){headEnd=i+1;}else{break;}
-      }
-      const body=document.createElement('div');
-      body.className='slide-body';
-      const moveList=kids.slice(headEnd);
-      if(moveList.length===0)return;
-      moveList.forEach(el=>body.appendChild(el));
-      slide.appendChild(body);
-    });
-    // 封面與目錄不分欄
-    document.querySelectorAll('.slide.cover').forEach(s=>s.classList.add('no-col'));
-    const toc=document.querySelector('.toc-list');
-    if(toc)toc.closest('.slide').classList.add('no-col');
-  })();
-
   const slides=[...document.querySelectorAll('.slide')];
   let cur=0;
-  function isSlideMode(){
-    return window.matchMedia('(min-width:768px) and (min-aspect-ratio:13/10)').matches;
-  }
-  function fitSlide(s){
-    const body=s.querySelector('.slide-body');
-    if(!body)return;
-    body.style.transform='';
-    body.style.transformOrigin='top center';
-    body.style.width='';
-    body.style.marginBottom='';
-    if(!isSlideMode())return;
-    if(s.classList.contains('cover'))return; // 封面/聯絡頁是設計好的版面，不縮放
-    const avail=s.clientHeight - body.offsetTop - parseFloat(getComputedStyle(s).paddingBottom) - 8;
-    const need=body.scrollHeight;
-    if(need>avail && avail>0){
-      const k=Math.max(0.5, (avail/need));
-      body.style.transform='scale('+k+')';
-      // 不放大 width，避免水平溢出；用負margin補償縮放後的底部留白
-      body.style.marginBottom=(-(need*(1-k)))+'px';
-    }
-  }
   function render(){
     slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
     document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
@@ -1201,9 +1079,7 @@
     document.getElementById('prev').disabled=(cur===0);
     document.getElementById('next').disabled=(cur===slides.length-1);
     slides[cur].scrollTop=0;
-    requestAnimationFrame(()=>fitSlide(slides[cur]));
   }
-  window.addEventListener('resize',()=>fitSlide(slides[cur]));
   function next(){if(cur<slides.length-1){cur++;render();}}
   function prev(){if(cur>0){cur--;render();}}
   function goTo(i){cur=i;render();}
