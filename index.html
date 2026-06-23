@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>自立生活，由你做主｜南桃園身心支持資源</title>
+<style>
+  :root{
+    --paper:#f3e9d2;
+    --ink:#2b2620;
+    --ink-soft:#4a4136;
+    --red:#c0392b;
+    --green:#2e6b4f;
+    --gold:#c9962f;
+    --line:#2b2620;
+    --card:#fbf6e9;
+    --shadow:6px 6px 0 rgba(43,38,32,.85);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;}
+  body{
+    font-family:"PingFang TC","Microsoft JhengHei","Noto Sans TC",sans-serif;
+    background:var(--ink);
+    color:var(--ink);
+    overflow:hidden;
+    -webkit-text-size-adjust:100%;
+  }
+  /* ===== 桌機／投影機：16:9 橫式投影片 ===== */
+  @media(min-width:768px) and (min-aspect-ratio:13/10){
+    body{
+      display:flex;align-items:center;justify-content:center;
+      background:#1c1813;
+      background-image:
+        radial-gradient(circle at 12% 15%, rgba(201,150,47,.06) 0 2px, transparent 3px),
+        radial-gradient(circle at 88% 85%, rgba(46,107,79,.05) 0 2px, transparent 3px);
+      background-size:54px 54px;
+      padding:0;
+    }
+    .stage{
+      width:min(100vw, calc(100dvh * 16 / 9));
+      height:min(100dvh, calc(100vw * 9 / 16)) !important;
+      max-width:1600px;max-height:900px;
+      border:5px solid var(--gold);
+      box-shadow:0 22px 70px rgba(0,0,0,.6);
+    }
+    .slide{padding:30px 52px 84px;}
+    .slide .eyebrow{font-size:18px;padding:7px 16px;margin-bottom:12px;}
+    h1.title{font-size:clamp(44px,5vw,68px);}
+    h2.subtitle{font-size:clamp(26px,2.8vw,36px);margin-bottom:14px;}
+    .lead{font-size:clamp(18px,1.5vw,22px);line-height:1.6;}
+    .card h3{font-size:clamp(20px,1.6vw,23px);margin-bottom:6px;}
+    .card p{font-size:clamp(15px,1.3vw,18px);line-height:1.6;}
+    .card .meta{font-size:clamp(14px,1.15vw,16px);margin-top:7px;}
+    .point .ptx{font-size:clamp(16px,1.4vw,19px);}
+    .point{margin-bottom:10px;}
+    .slide-body{column-count:2;column-gap:26px;width:100%;}
+    .slide-body>*{break-inside:avoid;-webkit-column-break-inside:avoid;}
+    .slide.cover .slide-body,
+    .slide.no-col .slide-body{column-count:1;}
+    .card{margin-bottom:14px;padding:16px 20px;}
+    .toc-list{display:grid;grid-template-columns:1fr 1fr;column-gap:26px;row-gap:12px;}
+    .toc-list .toc-item{margin-bottom:0;padding:12px 14px;}
+    .toc-item .tx{font-size:20px;}
+    .toc-item .tx small{font-size:14px;}
+    .toc-num{width:44px;height:44px;font-size:21px;}
+    .slide.no-col h2.subtitle{margin-bottom:14px;}
+    .nav{height:72px;}
+    .nav #prev,.nav #next{width:auto;height:auto;border-radius:0;padding:10px 24px;font-size:19px;}
+    .nav #prev .lbl,.nav #next .lbl{display:inline;}
+    .nav #prev .arr,.nav #next .arr{font-size:19px;margin-top:0;}
+    .nav .nbtn.home{width:auto;height:auto;border-radius:0;padding:10px 16px;font-size:20px;}
+    .bar{width:200px;}
+    .stamp{width:88px;height:88px;font-size:15px;top:28px;right:34px;}
+  }
+
+  /* 舞台 */
+  .stage{
+    position:relative;
+    width:100%;
+    height:100dvh;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 18% 12%, rgba(201,150,47,.08) 0 2px, transparent 3px),
+      radial-gradient(circle at 82% 78%, rgba(46,107,79,.06) 0 2px, transparent 3px);
+    background-size:42px 42px;
+    overflow:hidden;
+  }
+
+  /* 投影片 */
+  .slide{
+    position:absolute;
+    inset:0;
+    padding:26px 22px 88px;
+    display:none;
+    flex-direction:column;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    animation:fade .4s ease;
+  }
+  .slide.active{display:flex;}
+  @keyframes fade{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  /* 卡片／重點逐張浮現 */
+  .slide.active .card,
+  .slide.active .point,
+  .slide.active .toc-item,
+  .slide.active .emerg{
+    animation:rise .5s ease both;
+  }
+  @keyframes rise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .slide.active .card:nth-child(1),.slide.active .point:nth-child(1),.slide.active .toc-item:nth-child(1){animation-delay:.05s;}
+  .slide.active .card:nth-child(2),.slide.active .point:nth-child(2),.slide.active .toc-item:nth-child(2){animation-delay:.13s;}
+  .slide.active .card:nth-child(3),.slide.active .point:nth-child(3),.slide.active .toc-item:nth-child(3){animation-delay:.21s;}
+  .slide.active .card:nth-child(4),.slide.active .point:nth-child(4),.slide.active .toc-item:nth-child(4){animation-delay:.29s;}
+  .slide.active .card:nth-child(5),.slide.active .point:nth-child(5),.slide.active .toc-item:nth-child(5){animation-delay:.37s;}
+  .slide.active .card:nth-child(6),.slide.active .toc-item:nth-child(6){animation-delay:.45s;}
+  .slide.active .toc-item:nth-child(7){animation-delay:.53s;}
+  .slide.active .toc-item:nth-child(8){animation-delay:.61s;}
+  .slide.active .toc-item:nth-child(9){animation-delay:.69s;}
+  .slide.active .toc-item:nth-child(10){animation-delay:.77s;}
+  @media(prefers-reduced-motion:reduce){
+    .slide.active .card,.slide.active .point,.slide.active .toc-item,.slide.active .emerg{animation:none;}
+  }
+
+  /* 頁眉小標 */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    align-self:flex-start;
+    background:var(--green);
+    color:#fff8e7;
+    font-size:15px;font-weight:800;letter-spacing:1px;
+    padding:6px 14px;
+    border:2.5px solid var(--line);
+    box-shadow:3px 3px 0 rgba(43,38,32,.8);
+    margin-bottom:16px;
+  }
+  .eyebrow.red{background:var(--red);}
+  .eyebrow.gold{background:var(--gold);color:#2b2620;}
+
+  h1.title{
+    font-size:clamp(30px,8.6vw,46px);
+    font-weight:900;line-height:1.22;
+    letter-spacing:.5px;
+    margin-bottom:14px;
+  }
+  h2.subtitle{
+    font-size:clamp(21px,5.6vw,28px);
+    font-weight:900;line-height:1.3;
+    margin-bottom:14px;
+  }
+  .lead{
+    font-size:clamp(17px,4.6vw,20px);
+    line-height:1.85;
+    color:var(--ink-soft);
+    font-weight:600;
+  }
+  .lead strong{color:var(--red);font-weight:900;}
+
+  /* 紅章 */
+  .stamp{
+    position:absolute;top:22px;right:18px;
+    width:74px;height:74px;border-radius:50%;
+    border:3px solid var(--red);
+    color:var(--red);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-size:13px;font-weight:900;line-height:1.25;
+    transform:rotate(-11deg);
+    background:rgba(192,57,43,.05);
+    letter-spacing:1px;
+  }
+
+  /* 封面 */
+  .cover{justify-content:center;align-items:center;text-align:center;}
+  .cover .brandline{
+    font-size:15px;font-weight:800;color:var(--green);
+    letter-spacing:2px;margin-bottom:22px;
+  }
+  .cover h1.title{font-size:clamp(36px,11vw,60px);}
+  .cover .who{
+    margin-top:26px;
+    font-size:16px;font-weight:700;color:var(--ink-soft);line-height:1.8;
+  }
+  .cover .big-emoji{font-size:60px;margin-bottom:10px;}
+
+  /* 目錄 */
+  .toc-list{display:flex;flex-direction:column;gap:12px;margin-top:6px;}
+  .toc-item{
+    display:flex;align-items:center;gap:14px;
+    background:var(--card);
+    border:3px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:15px 16px;
+    cursor:pointer;
+    transition:transform .12s, background .15s, box-shadow .12s;
+  }
+  .toc-item:active{transform:translate(2px,2px);}
+  @media(hover:hover){
+    .toc-item:hover{background:#fff8e7;transform:translate(-1px,-1px);box-shadow:7px 7px 0 rgba(43,38,32,.85);}
+    .toc-item:hover .toc-num{background:var(--green);}
+  }
+  .toc-num{transition:background .15s;}
+  .toc-num{
+    flex:0 0 auto;
+    width:42px;height:42px;border-radius:50%;
+    background:var(--red);color:#fff8e7;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;font-weight:900;
+    border:2.5px solid var(--line);
+  }
+  .toc-item .tx{font-size:19px;font-weight:800;line-height:1.35;}
+  .toc-item .tx small{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-top:2px;}
+
+  /* 卡片 */
+  .card{
+    background:var(--card);
+    border:3px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:18px;
+    margin-bottom:15px;
+  }
+  .card h3{
+    font-size:20px;font-weight:900;margin-bottom:8px;
+    display:flex;align-items:center;gap:9px;
+  }
+  .card p{font-size:16px;line-height:1.78;color:var(--ink-soft);font-weight:600;}
+  .card .meta{
+    font-size:15px;font-weight:700;color:var(--green);
+    margin-top:9px;line-height:1.7;
+  }
+  .tag{
+    display:inline-block;
+    background:var(--gold);color:#2b2620;
+    font-size:13px;font-weight:900;
+    padding:3px 10px;border:2px solid var(--line);
+    margin-bottom:9px;
+  }
+  .tag.green{background:var(--green);color:#fff8e7;}
+  .tag.red{background:var(--red);color:#fff8e7;}
+
+  .calls{display:flex;flex-wrap:wrap;gap:9px;margin-top:12px;}
+  .call{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:16px;font-weight:900;
+    text-decoration:none;
+    padding:9px 15px;
+    border:2.5px solid var(--line);
+    box-shadow:3px 3px 0 rgba(43,38,32,.8);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .call.tel{background:var(--red);color:#fff8e7;}
+  .call.map{background:var(--card);color:var(--ink);}
+  .call:active{transform:translate(3px,3px);box-shadow:0 0 0 rgba(43,38,32,.8);}
+  @media(hover:hover){
+    .call:hover{transform:translateY(-2px);box-shadow:4px 6px 0 rgba(43,38,32,.85);}
+  }
+  /* 電話圖示輕微脈動，暗示「可以打」 */
+  .call.tel{position:relative;}
+  .call.tel::before{
+    content:"";position:absolute;left:0;top:0;right:0;bottom:0;
+    border:2.5px solid var(--red);
+    animation:ring 2.2s ease-out infinite;
+    pointer-events:none;opacity:0;
+  }
+  @keyframes ring{0%{opacity:.6;transform:scale(1);}70%{opacity:0;transform:scale(1.12);}100%{opacity:0;}}
+  @media(prefers-reduced-motion:reduce){.call.tel::before{animation:none;}}
+
+  /* 重點清單（用段落感，不用條列點） */
+  .points{margin-top:6px;}
+  .point{
+    display:flex;gap:12px;align-items:flex-start;
+    margin-bottom:14px;
+  }
+  .point .dot{
+    flex:0 0 auto;
+    width:32px;height:32px;border-radius:50%;
+    background:var(--green);color:#fff8e7;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:900;border:2.5px solid var(--line);
+  }
+  .point .ptx{font-size:17px;line-height:1.7;font-weight:700;color:var(--ink);}
+  .point .ptx b{color:var(--red);}
+
+  .emerg{
+    background:#fff1ee;
+    border:3px dashed var(--red);
+    padding:16px;margin-top:6px;
+  }
+  .emerg .row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;}
+  .emerg .ecall{
+    flex:1 1 130px;
+    text-align:center;text-decoration:none;
+    background:var(--red);color:#fff8e7;
+    font-size:18px;font-weight:900;
+    padding:14px 8px;border:2.5px solid var(--line);
+    box-shadow:3px 3px 0 rgba(43,38,32,.8);
+  }
+  .emerg .ecall small{display:block;font-size:12px;font-weight:700;margin-top:2px;}
+
+  .note{
+    font-size:13px;color:var(--ink-soft);
+    line-height:1.7;margin-top:14px;font-weight:600;
+    border-top:2px dotted var(--line);padding-top:10px;
+  }
+
+  /* 導覽列 */
+  .nav{
+    position:absolute;left:0;right:0;bottom:0;
+    height:68px;
+    background:var(--ink);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 12px;
+    gap:8px;
+    border-top:4px solid var(--gold);
+  }
+  .nbtn{
+    display:flex;align-items:center;justify-content:center;gap:6px;
+    background:var(--paper);color:var(--ink);
+    border:2.5px solid var(--gold);
+    font-size:17px;font-weight:900;
+    cursor:pointer;
+    box-shadow:3px 3px 0 rgba(0,0,0,.4);
+    white-space:nowrap;
+    flex:0 0 auto;
+  }
+  /* 手機：上一頁/下一頁用圓形大箭頭，文字隱藏 */
+  #prev,#next{
+    width:50px;height:50px;border-radius:50%;
+    padding:0;font-size:26px;line-height:1;
+  }
+  #prev .lbl,#next .lbl{display:none;}
+  #prev .arr,#next .arr{font-size:30px;margin-top:-3px;}
+  .nbtn.home{
+    width:50px;height:50px;border-radius:50%;
+    padding:0;font-size:22px;
+  }
+  .nbtn:disabled{opacity:.3;}
+  .nbtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 rgba(0,0,0,.4);}
+  .progress{
+    color:#fff8e7;font-size:15px;font-weight:800;
+    display:flex;flex-direction:column;align-items:center;gap:6px;
+    flex:1 1 auto;min-width:0;
+  }
+  .bar{width:min(150px,42vw);height:8px;background:#5a5043;border-radius:4px;overflow:hidden;}
+  .bar i{display:block;height:100%;background:var(--gold);transition:width .35s;}
+
+  /* 兩格小資訊 */
+  .duo{display:flex;flex-direction:column;gap:13px;}
+  @media(min-width:560px){.duo{flex-direction:row;}.duo>*{flex:1;}}
+
+  .pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .pill{
+    font-size:14px;font-weight:800;
+    background:#fff8e7;border:2px solid var(--line);
+    padding:6px 12px;
+  }
+
+  .kicker{font-size:15px;font-weight:800;color:var(--green);margin:2px 0 12px;}
+  .hint{
+    margin-top:30px;font-size:16px;font-weight:800;
+    color:#fff8e7;background:var(--green);
+    padding:10px 20px;border:2.5px solid var(--line);
+    box-shadow:3px 3px 0 rgba(43,38,32,.8);
+    cursor:pointer;animation:bob 1.6s ease-in-out infinite;
+  }
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+  @media(prefers-reduced-motion:reduce){.hint{animation:none;}}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- 1 封面 -->
+  <section class="slide active cover">
+    <div class="big-emoji">🏡</div>
+    <div class="brandline">愛迪樂居家職能治療所 ｜ 社區生活重建</div>
+    <h1 class="title">自立生活<br>由你做主</h1>
+    <p class="lead" style="max-width:520px">在社區裡安心生活，<strong>你不需要一個人撐著</strong>。<br>今天我們一起認識，南桃園可以陪你的資源。</p>
+    <div class="who">精障朋友 × 社區長輩　共融活動<br>中壢・平鎮・楊梅・龍潭一帶</div>
+    <div class="hint" onclick="next()">點「下一頁」開始 ↓</div>
+  </section>
+
+  <!-- 2 目錄 -->
+  <section class="slide">
+    <span class="eyebrow gold">📖 今天的內容</span>
+    <h2 class="subtitle">今天帶你認識的資源</h2>
+    <div class="toc-list">
+      <div class="toc-item" data-go="sec-coffee"><div class="toc-num">☕</div><div class="tx">來學手沖咖啡<small>一技之長＋健康喝法</small></div></div>
+      <div class="toc-item" data-go="sec-self"><div class="toc-num">1</div><div class="tx">自立生活，由你做主<small>同儕支持＋個人助理</small></div></div>
+      <div class="toc-item" data-go="sec-day"><div class="toc-num">2</div><div class="tx">白天去哪走走<small>會所與社區復健（不用住）</small></div></div>
+      <div class="toc-item" data-go="sec-job"><div class="toc-num">3</div><div class="tx">想找工作、學技能<small>支持性、庇護工場、職務再設計</small></div></div>
+      <div class="toc-item" data-go="sec-center"><div class="toc-num">4</div><div class="tx">身障資源中心幫你什麼<small>生活・心理・婚姻・自立</small></div></div>
+      <div class="toc-item" data-go="sec-ltc"><div class="toc-num">5</div><div class="tx">長照可以申請嗎<small>好手好腳也可能用得到</small></div></div>
+      <div class="toc-item" data-go="sec-go"><div class="toc-num">6</div><div class="tx">出門・交通<small>復康巴士與搭車優惠</small></div></div>
+      <div class="toc-item" data-go="sec-life"><div class="toc-num">7</div><div class="tx">看診・福利・租屋<small>諮詢窗口與社區租屋</small></div></div>
+      <div class="toc-item" data-go="sec-money"><div class="toc-num">8</div><div class="tx">吃飯・生活有困難<small>1957、急難救助、生活補助</small></div></div>
+      <div class="toc-item" data-go="sec-fun"><div class="toc-num">9</div><div class="tx">社群・休閒・家屬<small>社區據點與照顧者專線</small></div></div>
+      <div class="toc-item" data-go="sec-help"><div class="toc-num">10</div><div class="tx">不舒服時，這樣求助<small>心理專線與緊急電話</small></div></div>
+    </div>
+  </section>
+
+  <!-- 2.3 手沖咖啡 一技之長 -->
+  <section class="slide" id="sec-coffee">
+    <div class="stamp">學一技<br>之長</div>
+    <span class="eyebrow gold">☕ 來學手沖咖啡</span>
+    <h2 class="subtitle">六步驟，沖出一杯好咖啡</h2>
+    <p class="lead" style="margin-bottom:14px">手沖咖啡<strong>好上手、能靜心，也可能成為一技之長</strong>。會所裡就能練習，慢慢做、很療癒。</p>
+    <div class="card">
+      <h3>1️⃣ 磨豆與備水</h3>
+      <p>喝之前再現磨（香氣最好）。熱水準備 <b>約 90℃</b>（大滾後稍放涼）。新手粉水比抓 <b>1:15</b>，例如咖啡粉 20 克配水 300 克。</p>
+    </div>
+    <div class="card">
+      <h3>2️⃣ 潤濕濾紙</h3>
+      <p>濾紙放進濾杯，用熱水繞圈淋濕，去掉紙味也順便溫杯，再把下壺的水倒掉。</p>
+    </div>
+    <div class="card">
+      <h3>3️⃣ 倒粉鋪平</h3>
+      <p>咖啡粉倒入，輕拍濾杯讓表面平整。</p>
+    </div>
+    <div class="card">
+      <h3>4️⃣ 悶蒸 30 秒</h3>
+      <p>從中心由內往外畫圈，注入約粉量 1.5 倍的水，把粉浸濕。粉會像泡芙一樣鼓起，<b>等約 30 秒</b>。鼓得漂亮代表豆子新鮮。</p>
+    </div>
+    <div class="card">
+      <h3>5️⃣ 分段注水</h3>
+      <p>再以「の」字形穩定繞圈注水，水流細而穩、別沖到濾紙，慢慢加到預定水量。</p>
+    </div>
+    <div class="card">
+      <h3>6️⃣ 完成享用</h3>
+      <p>全程約 <b>2～3 分鐘</b>，咖啡滴完移開濾杯，輕輕搖勻就可以喝了。太苦下次磨粗一點，太淡磨細一點。</p>
+    </div>
+    <p class="note">以上為新手參考參數，水溫、比例、研磨可依個人口味調整，「自己覺得好喝」最重要。</p>
+  </section>
+
+  <!-- 2.6 選好豆 vs 三合一 -->
+  <section class="slide">
+    <span class="eyebrow green">☕ 怎麼選</span>
+    <h2 class="subtitle">好咖啡豆 vs 三合一</h2>
+    <div class="duo">
+      <div class="card">
+        <span class="tag green">看品質</span>
+        <h3>🌱 怎麼挑好豆子</h3>
+        <p>看<b>烘焙日期越新鮮越好</b>（賞味期約烘後 3～4 週）；包裝有單向排氣閥較佳；買回家裝密封罐、避光避潮；喝之前再現磨。淺焙偏果酸花香、深焙偏濃郁苦甜，依喜好選。</p>
+      </div>
+      <div class="card">
+        <span class="tag red">看成分</span>
+        <h3>🥤 三合一是什麼</h3>
+        <p>「咖啡＋糖＋奶精」沖泡包。方便便宜，但<b>糖分高、奶精常含植物油脂</b>，喝的咖啡風味少、熱量與負擔高。偶爾喝可以，<b>不建議天天當水喝</b>。</p>
+      </div>
+    </div>
+    <div class="card" style="background:#eef6f1;border-color:var(--green)">
+      <p class="lead" style="font-size:17px">想顧健康：<strong>純咖啡（手沖或黑咖啡）優先</strong>，想喝甜的可自己加少量鮮奶，比三合一清爽也較單純。</p>
+    </div>
+  </section>
+
+  <!-- 2.8 健康喝法與用藥 -->
+  <section class="slide">
+    <div class="stamp">健康<br>提醒</div>
+    <span class="eyebrow red">☕ 怎麼喝最健康</span>
+    <h2 class="subtitle">喝咖啡，這幾點要記得</h2>
+    <div class="card">
+      <span class="tag">適量</span>
+      <h3>☕ 一天大概多少</h3>
+      <p>一般成人一天咖啡因建議不超過約 <b>300～400 毫克</b>（大約 2～3 杯中杯）。會心悸、手抖、胃不舒服就要減量。</p>
+    </div>
+    <div class="card">
+      <span class="tag red">很重要</span>
+      <h3>💊 有吃精神科藥物嗎？</h3>
+      <p>咖啡因可能和部分精神科藥物互相影響——例如<b>安眠、鎮靜藥</b>的效果可能被咖啡因抵消；某些<b>抗精神病藥</b>（如 Clozapine）和咖啡因併用，血中濃度可能升高、更想睡或頭暈。</p>
+      <p class="meta">原則：吃藥配白開水，吃完藥<b>間隔 1 小時以上</b>再喝咖啡。<b>你的狀況怎麼喝、能不能喝，請問你的醫師或藥師。</b></p>
+    </div>
+    <div class="card">
+      <span class="tag green">顧睡眠</span>
+      <h3>🌙 幾點後別喝</h3>
+      <p>咖啡因會留在身體好幾個小時。建議<b>下午 2 點後就別再喝</b>（睡前 6～8 小時內避免），晚上才睡得好。睡不好會讓情緒和症狀更不穩。</p>
+    </div>
+    <p class="note">咖啡因影響因人而異，若正在服藥或有睡眠、心臟、腸胃問題，請以醫師或藥師建議為準。</p>
+  </section>
+
+  <!-- 3 自立生活理念 -->
+  <section class="slide" id="sec-self">
+    <div class="stamp">賦權<br>自主</div>
+    <span class="eyebrow">① 自立生活</span>
+    <h2 class="subtitle">「自立」不是凡事自己來</h2>
+    <p class="lead" style="margin-bottom:16px">而是<strong>由你做主，決定怎麼過生活</strong>，再由專業夥伴從旁支持你完成。</p>
+    <div class="points">
+      <div class="point"><div class="dot">★</div><div class="ptx">你是自己生活的主人，<b>有權利自己做決定</b></div></div>
+      <div class="point"><div class="dot">★</div><div class="ptx">服務「以你為主體」，依你的意願量身規劃</div></div>
+      <div class="point"><div class="dot">★</div><div class="ptx">支持你「選擇」與「嘗試」，不是幫你決定好</div></div>
+      <div class="point"><div class="dot">★</div><div class="ptx">就算需要協助，<b>主導權還是在你手上</b></div></div>
+    </div>
+  </section>
+
+  <!-- 3.5 自立生活 vs 自立生活方案 -->
+  <section class="slide">
+    <span class="eyebrow">① 自立生活</span>
+    <h2 class="subtitle">兩個很像、其實不同的詞</h2>
+    <p class="lead" style="margin-bottom:14px">常有人問：「自立生活」跟「自立生活方案」一樣嗎？其實一個是<strong>想法</strong>，一個是<strong>服務</strong>。</p>
+    <div class="duo">
+      <div class="card">
+        <span class="tag">一種想法</span>
+        <h3>💡 自立生活</h3>
+        <p>是一種<b>精神與權利</b>：你有權自己選擇住哪、怎麼過日子。它說的是「為什麼」。</p>
+      </div>
+      <div class="card">
+        <span class="tag green">一個服務</span>
+        <h3>🧩 自立生活支持服務</h3>
+        <p>是政府<b>實際可申請的方案</b>，派同儕支持員和個人助理來幫你。它說的是「怎麼做」。</p>
+      </div>
+    </div>
+    <div class="card" style="background:#eef6f1;border-color:var(--green)">
+      <p class="lead" style="font-size:17px">簡單記：<strong>自立生活是「目標」，自立生活支持服務是「工具」</strong>。想過自己作主的生活，就用這個服務來幫忙。</p>
+    </div>
+  </section>
+
+  <!-- 4 兩個夥伴 -->
+  <section class="slide">
+    <span class="eyebrow">① 自立生活</span>
+    <h2 class="subtitle">這個服務派兩個夥伴給你</h2>
+    <div class="duo">
+      <div class="card">
+        <span class="tag green">人力協助</span>
+        <h3>🤝 個人助理</h3>
+        <p>你需要時，提供生活與社會參與的人力協助——外出、處理日常事務、參與社區活動。<b>怎麼用，由你決定。</b></p>
+        <p class="meta">✅ 不分障別都能用！精神障礙的朋友只要領有身障證明、評估有需求，一樣可以申請。</p>
+      </div>
+      <div class="card">
+        <span class="tag">過來人陪伴</span>
+        <h3>💬 同儕支持員</h3>
+        <p>和你有相似經驗的過來人。<b>能陪你什麼？</b>陪你一起擬定生活計畫、用親身經驗給你打氣、示範「這條路走得通」，陪你面對社區生活的難題。</p>
+      </div>
+    </div>
+    <div class="card" style="margin-top:4px">
+      <h3>＠ 想申請？這樣開始</h3>
+      <p>同儕支持不用另外申請，它<b>包含在「自立生活支持服務」裡</b>。資格：<b>年滿18歲、實際居住桃園、領有身障證明</b>，準備一份簡單的生活計畫構想，經評估有意願即可。</p>
+      <p class="meta">承辦：桃園市自閉症協進會（陳社工）03-2170919｜需求評估中心 03-3680711</p>
+      <div class="calls">
+        <a class="call tel" href="tel:032170919">📞 承辦單位 03-217-0919</a>
+        <a class="call tel" href="tel:033680711">📞 需求評估 03-368-0711</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 白天去哪（非住宿日間） -->
+  <section class="slide" id="sec-day">
+    <span class="eyebrow green">② 白天的去處（不用住）</span>
+    <h2 class="subtitle">白天來活動、交朋友</h2>
+    <p class="kicker">會所與社區復健中心 — 白天來，晚上回家</p>
+    <div class="card">
+      <span class="tag green">會所</span>
+      <h3>拓樂會所</h3>
+      <p>日間活動、人際互動、生活與就業能力練習。</p>
+      <p class="meta">📍 桃園區文中一路136號2樓｜9:00–16:00</p>
+      <div class="calls"><a class="call tel" href="tel:033600182">📞 03-360-0182</a></div>
+    </div>
+    <div class="card">
+      <span class="tag green">會所</span>
+      <h3>伊甸沐陽會所</h3>
+      <p>日間活動、社區參與與支持性服務。</p>
+      <p class="meta">📍 平鎮區大連街49號2樓｜9:00–17:00</p>
+      <div class="calls"><a class="call tel" href="tel:0334390370">📞 03-439-0370 #16</a></div>
+    </div>
+    <div class="card">
+      <span class="tag green">會所</span>
+      <h3>欣晴會所</h3>
+      <p>日間活動、社交練習與就業前準備。</p>
+      <p class="meta">📍 中壢區元化路216號10樓｜9:00–16:00</p>
+      <div class="calls"><a class="call tel" href="tel:0334250581">📞 03-425-0581</a></div>
+    </div>
+    <div class="card">
+      <span class="tag">日間</span>
+      <h3>社區復健中心（日間型）</h3>
+      <p>佳欣・忻樂・大石門等中心，提供生活與工作技能訓練、職前準備、社交活動，<b>白天來、晚上回家</b>。</p>
+      <p class="meta">📞 佳欣 03-445-80289｜忻樂 03-442-63799｜大石門 03-447-14189</p>
+    </div>
+  </section>
+
+  <!-- 6 就業-入口 -->
+  <section class="slide" id="sec-job">
+    <span class="eyebrow">③ 想找工作</span>
+    <h2 class="subtitle">找工作，從哪裡開始？</h2>
+    <p class="lead" style="margin-bottom:14px">精神疾病的朋友，<strong>只要病情穩定、有醫師診斷證明（或重大傷病卡）</strong>，就能用職業重建服務。先找你住的那一區窗口——</p>
+    <div class="card">
+      <span class="tag red">北區窗口</span>
+      <h3>🔧 職業重建服務（北區）</h3>
+      <p>服務<b>桃園、八德、龜山、蘆竹、大溪、大園、復興</b>。</p>
+      <p class="meta">📍 桃園區縣府路1號3樓</p>
+      <div class="calls">
+        <a class="call tel" href="tel:0333338140">📞 03-333-3814</a>
+        <a class="call tel" href="tel:0333338700">📞 03-333-3870</a>
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag green">南區窗口</span>
+      <h3>🔧 職業重建服務（南區）</h3>
+      <p>服務<b>中壢、平鎮、龍潭、楊梅、新屋、觀音</b>。個管員陪你評估能力 → 職業輔導評量 → 媒合工作或職訓。</p>
+      <p class="meta">📍 中壢區明德路60號4樓</p>
+      <div class="calls">
+        <a class="call tel" href="tel:0340201220">📞 03-402-0122</a>
+        <a class="call tel" href="tel:0340201360">📞 03-402-0136</a>
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag">也可以</span>
+      <h3>🏢 就業服務站</h3>
+      <p>登記求職、職缺媒合、就業諮詢。線上可用「台灣就業通」。也可請會所或社復中心幫你轉介。</p>
+    </div>
+  </section>
+
+  <!-- 6.5 就業型態與勞健保 -->
+  <section class="slide">
+    <span class="eyebrow">③ 想找工作</span>
+    <h2 class="subtitle">兩種上班的方式</h2>
+    <div class="card">
+      <span class="tag green">能力較穩</span>
+      <h3>💪 支持性就業</h3>
+      <p>進入<b>一般職場</b>工作，有「就業教練」在旁邊協助你適應。薪水跟一般員工一樣，<b>由公司依法投保勞保、健保</b>。</p>
+    </div>
+    <div class="card">
+      <span class="tag">需要多點支持</span>
+      <h3>🏭 庇護工場（庇護性就業）</h3>
+      <p>給暫時還沒辦法進一般職場的朋友，邊做邊練習（烘焙、手作、清潔、園藝等）。<b>一樣有勞保、健保</b>。</p>
+      <p class="meta">提醒：庇護工場薪水是「依你做多少來算」，可能低於基本工資，這點先了解再決定。</p>
+    </div>
+    <div class="card" style="background:#eef6f1;border-color:var(--green)">
+      <p class="lead" style="font-size:17px"><strong>有工作通常是加分</strong>——有收入、生活更安心。申請補助前，可請社工幫你試算怎麼搭配最有利。</p>
+    </div>
+  </section>
+
+  <!-- 6.8 職務再設計 -->
+  <section class="slide">
+    <div class="stamp">就業<br>支持</div>
+    <span class="eyebrow gold">③ 想找工作</span>
+    <h2 class="subtitle">工作做得卡卡的？可以調整</h2>
+    <p class="lead" style="margin-bottom:14px">這叫「<strong>職務再設計</strong>」——讓工作配合你，而不是你硬撐配合工作。</p>
+    <div class="card">
+      <h3>🛠 可以幫你調整什麼</h3>
+      <p>調整工作內容與分配、改善工作流程與條件（例如工時節奏）、提供就業輔具、改善工作環境與機具。</p>
+    </div>
+    <div class="card">
+      <span class="tag red">門檻很寬</span>
+      <h3>👍 還沒拿到身障證明也行</h3>
+      <p>只要<b>經精神科醫師診斷為精神疾病</b>，就算還沒領身障證明，也能申請（這種情況限申請就業輔具）。</p>
+    </div>
+    <div class="card" style="background:#fff8e7">
+      <h3>📞 去哪裡辦</h3>
+      <p>主管機關是<b>桃園市勞動局身障就業科</b>，可直接洽詢或請職重個管員協助提出。</p>
+      <p class="meta">📍 桃園區縣府路1號3、4樓｜可透過北區 03-333-3814、南區 03-402-0122 職重窗口提出</p>
+      <div class="calls"><a class="call tel" href="tel:0333322101">📞 勞動局 03-3322101</a></div>
+    </div>
+  </section>
+
+  <!-- 7 身障資源中心四大服務 -->
+  <section class="slide" id="sec-center">
+    <span class="eyebrow">④ 身障資源中心</span>
+    <h2 class="subtitle">不知道找誰？先來這裡</h2>
+    <p class="lead" style="margin-bottom:14px">身障者服務中心是<strong>「轉介樞紐」</strong>：先了解你的需要，再幫你連到對的服務。四種常見的協助是——</p>
+    <div class="card">
+      <span class="tag green">①</span>
+      <h3>🌱 生活重建</h3>
+      <p>重新練習日常自理、社區適應、人際與社交技巧，把生活能力找回來。</p>
+    </div>
+    <div class="card">
+      <span class="tag green">②</span>
+      <h3>💗 心理重建</h3>
+      <p>心理諮商、支持團體、情緒調適，陪你重新認識自己、面對障礙。</p>
+    </div>
+    <div class="card">
+      <span class="tag green">③</span>
+      <h3>💞 婚姻及生育輔導</h3>
+      <p>交友、感情、婚姻、生育與當父母的諮詢與支持。</p>
+    </div>
+    <div class="card">
+      <span class="tag green">④</span>
+      <h3>🏡 自立生活支持服務</h3>
+      <p>就是前面說的——同儕支持員＋個人助理，陪你在社區自主生活。</p>
+    </div>
+    <div class="card" style="background:#fff8e7">
+      <p class="lead" style="font-size:16px">對象：<b>7歲以上、住桃園、有身障證明</b>。先做需求評估，再幫你安排或轉介。</p>
+      <div class="calls"><a class="call tel" href="tel:0333322101">📞 社會局身障科 03-3322101</a></div>
+    </div>
+  </section>
+
+  <!-- 7.4 長照可以申請嗎 -->
+  <section class="slide" id="sec-ltc">
+    <div class="stamp">破除<br>迷思</div>
+    <span class="eyebrow red">⑤ 長照可以申請嗎</span>
+    <h2 class="subtitle">「好手好腳」也可能用得到</h2>
+    <p class="lead" style="margin-bottom:14px">很多人以為精障朋友四肢健全，長照一定評不過。其實——<strong>長照看的是「生活功能」，不是只看手腳。</strong></p>
+    <div class="card">
+      <h3>🔍 評估會看三個面向</h3>
+      <p>不只是吃飯穿衣走路（身體功能），還包含<b>用藥管理、購物、備餐、處理金錢、外出</b>（工具性生活），以及<b>精神與行為</b>狀況。任一面向有明顯需要協助，都會列入。</p>
+    </div>
+    <div class="card" style="background:#eef6f1;border-color:var(--green)">
+      <p class="lead" style="font-size:16px">所以不是「動機問題」。如果你<b>沒辦法自己管理藥物、獨立外出辦事、或症狀影響日常打理</b>，這些都是實際的協助需求，照管專員會評估。</p>
+    </div>
+    <div class="card">
+      <span class="tag green">長照3.0</span>
+      <h3>🤝 精障朋友還有專屬安排</h3>
+      <p>2026年上路的長照3.0特別納入精神障礙者：<b>由社區心理衛生中心提供社區關懷訪視</b>，定期有人關心、連結資源。</p>
+    </div>
+    <div class="card">
+      <h3>📞 怎麼申請</h3>
+      <p>打 <b>1966</b>（免費）→ 照管專員到府評估 → 核定等級。記得把生活與精神上的協助需求<b>據實說清楚</b>，不要自己先預設過不過。</p>
+      <div class="calls"><a class="call tel" href="tel:1966">📞 長照專線 1966</a></div>
+    </div>
+    <p class="note">長照補助門檻為第2級以上（第1級僅輕微衰弱不符補助）。身障證明與長照資格是不同系統，需另撥1966申請。實際以照管中心評估結果為準。目前無精障類別專屬核准率之官方統計，能否核定仍以個別功能評估為準。</p>
+  </section>
+
+  <!-- 7.5 交通訓練 -->
+  <section class="slide">
+    <div class="stamp">創新<br>方案</div>
+    <span class="eyebrow gold">⑥ 學會自己出門</span>
+    <h2 class="subtitle">交通訓練計畫</h2>
+    <p class="lead" style="margin-bottom:16px">桃園市社區心理衛生中心的創新方案，幫你<strong>提升交通自主、減少依賴家人接送</strong>。</p>
+    <div class="card">
+      <h3>🚌 學些什麼？</h3>
+      <div class="pill-row">
+        <span class="pill">Google Maps 教學</span>
+        <span class="pill">公車 APP 使用</span>
+        <span class="pill">實際搭乘訓練</span>
+        <span class="pill">交通安全知識</span>
+        <span class="pill">機車駕訓課程</span>
+      </div>
+      <p class="meta" style="margin-top:14px">適合：有交通需求、想獨立外出、狀況穩定且有學習動機的朋友</p>
+    </div>
+    <div class="card">
+      <h3>📝 怎麼申請</h3>
+      <p>下載「社區心理衛生中心專業服務申請表」→ 填好 Email 寄出 → 中心督導評估。</p>
+      <p class="meta">林職能治療師｜03-3134995 分機113</p>
+      <div class="calls"><a class="call tel" href="tel:0331349950113">📞 撥打洽詢</a></div>
+    </div>
+  </section>
+
+  <!-- 7.6 復康巴士與交通 -->
+  <section class="slide" id="sec-go">
+    <span class="eyebrow gold">⑥ 出門・交通</span>
+    <h2 class="subtitle">出門有這些幫忙</h2>
+    <div class="card">
+      <span class="tag">無障礙接送</span>
+      <h3>🚐 復康巴士</h3>
+      <p>就醫、就學、就業、社區活動都能預約。<b>領有身障證明就能訂車</b>，乘坐輪椅或重度肢障、視障者優先。車資約一般計程車的三分之一。</p>
+      <p class="meta">北桃園訂車 03-301-0208｜南桃園訂車 03-301-5568｜每日 8:00–22:00（建議提早3～7天預約）</p>
+      <div class="calls">
+        <a class="call tel" href="tel:033010208">📞 北區 03-301-0208</a>
+        <a class="call tel" href="tel:033015568">📞 南區 03-301-5568</a>
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag green">搭車優惠</span>
+      <h3>🎫 搭大眾運輸有優惠</h3>
+      <p>持身心障礙證明搭公車、捷運、台鐵等可享票價優惠，必要陪伴者一名同享。詳情可洽區公所或社會局。</p>
+    </div>
+    <div class="card">
+      <span class="tag red">叫不到車時</span>
+      <h3>🚕 無障礙計程車</h3>
+      <p>復康巴士額滿時的彈性備案，可即時叫車、不限身障身分，依一般計程車費率計費。</p>
+    </div>
+    <p class="note">復康巴士資格分A、B等級，精神障礙多屬B等級可預約但非優先。費率與優惠依桃園市政府公告為準，預約前請先來電確認。</p>
+  </section>
+
+  <!-- 8 看診福利租屋 -->
+  <section class="slide" id="sec-life">
+    <span class="eyebrow red">⑦ 看診・福利</span>
+    <h2 class="subtitle">生活上的協助，都有窗口</h2>
+    <div class="card">
+      <span class="tag red">諮詢總窗口</span>
+      <h3>☎ 社區心理衛生中心</h3>
+      <p>心理諮詢、資源連結與轉介的總窗口。<b>不知道該找誰時，先打這裡。</b>不知道號碼時，撥安心專線 1925 也能協助連結。</p>
+      <div class="calls"><a class="call tel" href="tel:1925">📞 安心專線 1925</a></div>
+    </div>
+    <div class="card">
+      <span class="tag green">精神・情緒</span>
+      <h3>💚 持續的精神支持</h3>
+      <p>規律回診精神科之外，會所與社區復健中心提供日常的陪伴與練習。若有較嚴重的情緒行為困擾，可請社區心衛中心評估轉介合適的支持資源。</p>
+    </div>
+    <div class="card">
+      <span class="tag">福利</span>
+      <h3>🪪 身心障礙者服務中心／區公所</h3>
+      <p>協助申辦身障證明、福利諮詢、中低收入戶、租金補貼等，取得穩定的經濟支持。</p>
+    </div>
+    <p class="note">下一頁整理「想在社區租房子」可以找的幾種協助。</p>
+  </section>
+
+  <!-- 8.5 租屋協助 -->
+  <section class="slide">
+    <span class="eyebrow green">⑧ 想在社區租房子</span>
+    <h2 class="subtitle">租屋，不是只能靠自己</h2>
+    <p class="lead" style="margin-bottom:14px">精障朋友租屋常遇到房東有顧慮。其實有<strong>好幾種協助</strong>可以一起用——</p>
+    <div class="card">
+      <span class="tag green">找屋＋陪同</span>
+      <h3>🏠 崔媽媽基金會</h3>
+      <p>長期協助長者與身障者，提供租屋資訊、<b>陪同看屋、陪同簽約</b>，並招募友善房東。</p>
+      <div class="calls"><a class="call tel" href="tel:0223658140">📞 02-2365-8140</a></div>
+    </div>
+    <div class="card">
+      <span class="tag">租金打折</span>
+      <h3>🏢 社會住宅包租代管</h3>
+      <p>政府委託業者媒合房子，由業者居中管理，房東較安心。<b>身障者屬弱勢戶，租金約5～7折</b>，差額由政府補助。可上「內政部不動產資訊平台」或591社宅專區查詢。</p>
+    </div>
+    <div class="card">
+      <span class="tag red">每月補貼</span>
+      <h3>💰 身心障礙者房屋租金補貼</h3>
+      <p>桃園市對符合資格的身障者按月補助租金（依家庭人數，單身最高每月1,600元，並以租金總額50%為上限）。</p>
+      <p class="meta">向戶籍地區公所社會課或社會局身障科申請</p>
+    </div>
+    <div class="card">
+      <span class="tag green">其他團體</span>
+      <h3>🤝 還有這些可以問</h3>
+      <p>人生百味、芒草心慈善協會等團體也長期協助弱勢居住，可一併洽詢。社會局與自立生活支持服務也能協助住所媒合與無障礙改善。</p>
+    </div>
+    <p class="note">租金補貼與包租代管的金額、資格與折扣每年可能調整，實際以內政部、桃園市政府公告為準，申請前請與社工或承辦單位確認最新規定。</p>
+  </section>
+
+  <!-- 8.6 經濟與急難（食衣） -->
+  <section class="slide" id="sec-money">
+    <span class="eyebrow red">⑨ 吃飯・生活有困難</span>
+    <h2 class="subtitle">手頭緊、生活卡關時</h2>
+    <p class="lead" style="margin-bottom:14px">生活遇到難關不用硬撐，<strong>有幾條線可以先打</strong>——</p>
+    <div class="card">
+      <span class="tag red">一打就對</span>
+      <h3>☎ 1957 福利諮詢專線</h3>
+      <p>不知道自己能領什麼補助、生活陷入困難，先打這支。<b>急難救助、身障福利、社會救助</b>都能諮詢與通報轉介。</p>
+      <p class="meta">每日 8:00–22:00 免付費</p>
+      <div class="calls"><a class="call tel" href="tel:1957">📞 撥打 1957</a></div>
+    </div>
+    <div class="card">
+      <span class="tag">突發急難</span>
+      <h3>🆘 急難救助</h3>
+      <p>遇到重大傷病、失業、變故導致生活陷困，可向社會局或區公所申請急難救助金，幫你暫渡難關。</p>
+      <div class="calls"><a class="call tel" href="tel:0333322101">📞 社會局 03-3322101</a></div>
+    </div>
+    <div class="card">
+      <span class="tag green">每月補助</span>
+      <h3>💵 身心障礙者生活補助</h3>
+      <p>設籍桃園、領有身障證明且符合家庭收入條件者，可按月領生活補助費。向戶籍地區公所社會課申請。</p>
+    </div>
+    <div class="card">
+      <span class="tag">食物與物資</span>
+      <h3>🍱 送餐與食物銀行</h3>
+      <p>有備餐困難或經濟弱勢者，部分區域有送餐服務與食物銀行物資。可請社工或撥 1957、社會局協助連結。</p>
+    </div>
+    <p class="note">各項補助資格、金額與名額依桃園市政府與衛福部公告為準，申請前請與承辦單位或社工確認。</p>
+  </section>
+
+  <!-- 8.7 育樂與照顧者支持 -->
+  <section class="slide" id="sec-fun">
+    <span class="eyebrow green">⑩ 社群・休閒・家屬</span>
+    <h2 class="subtitle">生活不只看病，也要有伴</h2>
+    <p class="lead" style="margin-bottom:14px">穩定生活很重要的一塊，是<strong>有地方去、有人作伴、家人也被接住</strong>。</p>
+    <div class="card">
+      <span class="tag green">社群活動</span>
+      <h3>🎨 會所就是你的社群</h3>
+      <p>會所不只是上課——大家一起買菜、備餐、辦活動、分工合作，在做事中交朋友、找回自信。前面介紹的拓樂、伊甸沐陽、欣晴會所都歡迎你來。</p>
+    </div>
+    <div class="card">
+      <span class="tag">就近參與</span>
+      <h3>🏘 社區據點與文康活動</h3>
+      <p>各區的社區關懷據點、活動中心有共餐、運動、手作、課程等。可洽區公所或里辦公室，就近找到能參加的活動。</p>
+    </div>
+    <div class="card">
+      <span class="tag red">給家人的線</span>
+      <h3>☎ 精神疾病照顧者專線</h3>
+      <p>照顧精神疾病家人很辛苦。這支由<b>資深照顧者接線</b>，提供情緒支持、疾病知識、資源連結與家屬團體。</p>
+      <p class="meta">伊甸活泉之家 02-2230-8830｜週一至週五 13:30–20:30</p>
+      <div class="calls"><a class="call tel" href="tel:0222308830">📞 02-2230-8830</a></div>
+    </div>
+  </section>
+
+  <!-- 9 不舒服時 -->
+  <section class="slide" id="sec-help">
+    <span class="eyebrow red">⑪ 不舒服的時候</span>
+    <h2 class="subtitle">你可以這樣做</h2>
+    <p class="lead" style="margin-bottom:16px">情緒低落、睡不著、聽到別人聽不到的聲音——<strong>這些都是可以求助的訊號，不是你的錯。</strong></p>
+    <div class="card">
+      <h3>1️⃣ 先穩住自己</h3>
+      <p>慢慢深呼吸（吸4秒・停2秒・吐6秒）；說出眼前看到的5樣東西；喝口溫水、離開讓你不舒服的環境。</p>
+    </div>
+    <div class="card">
+      <h3>2️⃣ 找人說、找人陪</h3>
+      <p>身邊信任的人 → 會所或社復中心工作人員 → 愛迪樂團隊 → <b>24小時安心專線 1925</b>。不要一個人硬撐。</p>
+    </div>
+    <div class="card">
+      <h3>3️⃣ 回診或預約諮詢</h3>
+      <p>症狀持續或變嚴重時，回原本看診的精神科。不知道找誰，先打 1925 請人協助轉介。</p>
+    </div>
+  </section>
+
+  <!-- 9.5 心理專線 -->
+  <section class="slide">
+    <span class="eyebrow green">📞 想找人聊聊</span>
+    <h2 class="subtitle">心裡悶悶的，打這幾支</h2>
+    <p class="lead" style="margin-bottom:14px">不一定要等到很嚴重才求助。<strong>想找人說說話、情緒卡住了，都可以打。</strong></p>
+    <div class="card">
+      <h3>☎ 安心專線　1925</h3>
+      <p>衛福部專線，<b>24小時免付費</b>。情緒困擾、心理諮詢都可以打。（諧音「依舊愛我」）</p>
+      <div class="calls"><a class="call tel" href="tel:1925">📞 撥打 1925</a></div>
+    </div>
+    <div class="card">
+      <h3>☎ 生命線　1995</h3>
+      <p><b>24小時</b>。自殺防治、生活與婚姻家庭困擾、心理協談。（諧音「要救救我」）</p>
+      <div class="calls"><a class="call tel" href="tel:1995">📞 撥打 1995</a></div>
+    </div>
+    <div class="card">
+      <h3>☎ 張老師　1980</h3>
+      <p>情緒困擾與生活適應問題協助。（諧音「依舊幫你」）</p>
+      <p class="meta">週一～週六 9:00–21:00、週日 9:00–17:00</p>
+      <div class="calls"><a class="call tel" href="tel:1980">📞 撥打 1980</a></div>
+    </div>
+    <div class="card">
+      <h3>☎ 男性關懷專線　0800-013-999</h3>
+      <p>給男性朋友：婚姻、家人關係、情緒、失業、經濟等困擾的諮詢。</p>
+      <p class="meta">每日 9:00–23:00</p>
+      <div class="calls"><a class="call tel" href="tel:0800013999">📞 0800-013-999</a></div>
+    </div>
+  </section>
+
+  <!-- 10 緊急電話 + 結語 -->
+  <section class="slide">
+    <span class="eyebrow red">🆘 重要電話</span>
+    <h2 class="subtitle">遇到緊急狀況，立刻求助</h2>
+    <div class="emerg">
+      <p class="lead" style="font-size:17px">當你或身邊的人有立即危險、強烈情緒困擾或想傷害自己時，<strong>請立刻求助，隨時都有人接聽。</strong></p>
+      <div class="row">
+        <a class="ecall" href="tel:1925">1925<small>安心專線·24小時</small></a>
+        <a class="ecall" href="tel:1995">1995<small>生命線·24小時</small></a>
+        <a class="ecall" href="tel:119">119<small>緊急救護</small></a>
+      </div>
+      <div class="row">
+        <a class="ecall" href="tel:110" style="background:var(--green)">110<small>報警</small></a>
+        <a class="ecall" href="tel:113" style="background:var(--gold);color:#2b2620">113<small>保護專線</small></a>
+      </div>
+    </div>
+    <div class="card" style="margin-top:16px;text-align:center;background:#eef6f1;border-color:var(--green)">
+      <h3 style="justify-content:center">💚 愛迪樂陪你一起</h3>
+      <p>有任何不確定，歡迎先與我們聯繫，我們會陪你找到適合的資源。<br><b>你不必一個人面對。</b></p>
+    </div>
+    <p class="note">本資源整理參考桃園市政府衛生局社區心理衛生中心公開名單。各單位服務內容與聯絡方式可能異動，前往前請先來電確認。完整資源請見網站。</p>
+  </section>
+
+  <!-- 11 愛迪樂聯絡 -->
+  <section class="slide cover" id="sec-contact">
+    <div class="big-emoji">🤝</div>
+    <span class="eyebrow green" style="align-self:center">有任何問題，歡迎聯絡我們</span>
+    <h2 class="subtitle" style="text-align:center">愛迪樂居家職能治療所</h2>
+    <p class="lead" style="text-align:center;max-width:520px">今天介紹的資源，如果你還有不清楚的地方，<strong>不用自己煩惱</strong>，我們很樂意陪你一起找答案。</p>
+    <div class="card" style="margin-top:18px;text-align:center;max-width:460px">
+      <h3 style="justify-content:center">📞 找我們這樣聯絡</h3>
+      <p style="font-size:18px">找　<b>鍾孟修　職能治療師</b></p>
+      <div class="calls" style="justify-content:center;margin-top:14px">
+        <a class="call tel" href="tel:0225216043" style="font-size:19px;padding:13px 22px">📞 02-2521-6043</a>
+        <a class="call tel" href="tel:0986391797" style="font-size:19px;padding:13px 22px">📱 0986-391-797</a>
+      </div>
+    </div>
+    <p class="lead" style="text-align:center;margin-top:22px;font-size:18px">💚 你不必一個人面對，我們一起走。</p>
+  </section>
+
+  <!-- 導覽 -->
+  <div class="nav">
+    <button class="nbtn home" onclick="goTo(1)" title="目錄">📖</button>
+    <button class="nbtn" id="prev" onclick="prev()" aria-label="上一頁"><span class="arr">‹</span><span class="lbl">上一頁</span></button>
+    <div class="progress">
+      <span id="counter">1 / 10</span>
+      <div class="bar"><i id="barfill"></i></div>
+    </div>
+    <button class="nbtn" id="next" onclick="next()" aria-label="下一頁"><span class="lbl">下一頁</span><span class="arr">›</span></button>
+  </div>
+</div>
+
+<script>
+  // 自動把每張投影片的內容區包進 .slide-body（供桌機16:9分欄鋪排）
+  (function wrapBodies(){
+    document.querySelectorAll('.slide').forEach(slide=>{
+      if(slide.querySelector('.slide-body'))return;
+      const kids=[...slide.children];
+      // 標題群：stamp / eyebrow / h1 / h2 / 開場第一段 lead 或 kicker 保留在上方
+      let headEnd=0;
+      for(let i=0;i<kids.length;i++){
+        const el=kids[i];
+        const isHead = el.classList.contains('stamp')||el.classList.contains('eyebrow')
+          ||el.tagName==='H1'||el.tagName==='H2'||el.classList.contains('kicker')
+          ||(el.classList.contains('lead') && i<=3);
+        if(isHead){headEnd=i+1;}else{break;}
+      }
+      const body=document.createElement('div');
+      body.className='slide-body';
+      const moveList=kids.slice(headEnd);
+      if(moveList.length===0)return;
+      moveList.forEach(el=>body.appendChild(el));
+      slide.appendChild(body);
+    });
+    // 封面與目錄不分欄
+    document.querySelectorAll('.slide.cover').forEach(s=>s.classList.add('no-col'));
+    const toc=document.querySelector('.toc-list');
+    if(toc)toc.closest('.slide').classList.add('no-col');
+  })();
+
+  const slides=[...document.querySelectorAll('.slide')];
+  let cur=0;
+  function isSlideMode(){
+    return window.matchMedia('(min-width:768px) and (min-aspect-ratio:13/10)').matches;
+  }
+  function fitSlide(s){
+    const body=s.querySelector('.slide-body');
+    if(!body)return;
+    body.style.transform='';
+    body.style.transformOrigin='top left';
+    body.style.width='';
+    if(!isSlideMode())return;
+    // 可用高度 = slide 內距內的剩餘空間
+    const avail=s.clientHeight - body.offsetTop - parseFloat(getComputedStyle(s).paddingBottom) - 8;
+    const need=body.scrollHeight;
+    if(need>avail && avail>0){
+      const k=Math.max(0.55, (avail/need));
+      body.style.transform='scale('+k+')';
+      body.style.width=(100/k)+'%';
+    }
+  }
+  function render(){
+    slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
+    document.getElementById('counter').textContent=(cur+1)+' / '+slides.length;
+    document.getElementById('barfill').style.width=((cur+1)/slides.length*100)+'%';
+    document.getElementById('prev').disabled=(cur===0);
+    document.getElementById('next').disabled=(cur===slides.length-1);
+    slides[cur].scrollTop=0;
+    requestAnimationFrame(()=>fitSlide(slides[cur]));
+  }
+  window.addEventListener('resize',()=>fitSlide(slides[cur]));
+  function next(){if(cur<slides.length-1){cur++;render();}}
+  function prev(){if(cur>0){cur--;render();}}
+  function goTo(i){cur=i;render();}
+  function goId(id){const t=document.getElementById(id);const i=slides.indexOf(t);if(i>=0)goTo(i);}
+  document.querySelectorAll('.toc-item[data-go]').forEach(el=>{
+    el.addEventListener('click',()=>goId(el.dataset.go));
+  });
+  document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='PageDown')next();
+    if(e.key==='ArrowLeft'||e.key==='PageUp')prev();
+    if(e.key==='Home')goTo(0);
+  });
+  // 觸控左右滑
+  let sx=0,sy=0;
+  const stage=document.querySelector('.stage');
+  stage.addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+  stage.addEventListener('touchend',e=>{
+    const dx=e.changedTouches[0].clientX-sx;
+    const dy=e.changedTouches[0].clientY-sy;
+    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){dx<0?next():prev();}
+  },{passive:true});
+  render();
+</script>
+</body>
+</html>
