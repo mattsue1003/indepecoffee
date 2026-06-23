@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>自立生活，由你做主｜南桃園身心支持資源</title>
 <style>
   :root{
@@ -375,6 +376,279 @@
   }
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
   @media(prefers-reduced-motion:reduce){.hint{animation:none;}}
+
+  /* ===== 2026 UI refresh：沉穩、易讀、適合桌機投影與手機操作 ===== */
+  :root{
+    --paper:#f7f3eb;
+    --ink:#21332d;
+    --ink-soft:#5c6b65;
+    --red:#c95e4b;
+    --green:#28624f;
+    --gold:#e0a84a;
+    --line:#d9dfd9;
+    --card:rgba(255,255,255,.88);
+    --shadow:0 16px 40px rgba(31,54,45,.10);
+  }
+
+  html{background:#dfe9e2;}
+  body{
+    min-height:100%;
+    background:
+      radial-gradient(circle at 10% 10%,rgba(224,168,74,.22),transparent 28rem),
+      radial-gradient(circle at 90% 90%,rgba(40,98,79,.18),transparent 30rem),
+      #e8eee9;
+    color:var(--ink);
+    overflow:hidden;
+  }
+  button,a,[data-go]{touch-action:manipulation;}
+  button:focus-visible,a:focus-visible,[data-go]:focus-visible{
+    outline:3px solid #1c6fda;
+    outline-offset:3px;
+  }
+  .stage{
+    width:100%;
+    max-width:none;
+    height:100dvh;
+    background:
+      radial-gradient(circle at 100% 0,rgba(224,168,74,.12),transparent 24rem),
+      linear-gradient(145deg,#faf8f3,#f2f6f2);
+    border:0;
+    box-shadow:none;
+    overflow:hidden;
+  }
+  .slide{
+    scrollbar-width:thin;
+    scrollbar-color:rgba(40,98,79,.35) transparent;
+    padding:
+      max(24px,env(safe-area-inset-top))
+      clamp(18px,4.5vw,72px)
+      calc(94px + env(safe-area-inset-bottom));
+    overscroll-behavior:contain;
+  }
+  .slide::-webkit-scrollbar{width:6px;}
+  .slide::-webkit-scrollbar-thumb{background:rgba(40,98,79,.3);border-radius:999px;}
+  .slide.active{display:flex;}
+  .slide > *{
+    width:100%;
+    max-width:1120px;
+    margin-left:auto;
+    margin-right:auto;
+    flex-shrink:0;
+  }
+
+  .eyebrow{
+    width:auto;
+    border:0;
+    border-radius:999px;
+    box-shadow:none;
+    padding:8px 14px;
+    margin-left:max(0px,calc((100% - 1120px)/2));
+    margin-right:auto;
+    font-size:14px;
+  }
+  h1.title,h2.subtitle{letter-spacing:-.035em;color:var(--ink);}
+  h1.title{font-size:clamp(38px,7vw,74px);line-height:1.08;}
+  h2.subtitle{font-size:clamp(28px,4.2vw,48px);line-height:1.15;margin-bottom:16px;}
+  .lead{font-size:clamp(17px,2vw,21px);line-height:1.75;font-weight:550;}
+  .lead strong{color:#a8493b;}
+  .kicker{font-size:16px;}
+
+  .card,.toc-item,.srow,.emerg{
+    border:1px solid rgba(40,98,79,.14);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+  }
+  .card{
+    padding:clamp(18px,2.2vw,26px);
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .card h3{font-size:clamp(19px,2vw,23px);line-height:1.4;}
+  .card p{font-size:clamp(15px,1.5vw,17px);line-height:1.8;font-weight:500;}
+  .card .meta{font-size:14px;line-height:1.7;}
+  .tag,.pill{
+    border:0;
+    border-radius:999px;
+  }
+  .tag{padding:5px 11px;}
+  .pill{background:#edf3ee;padding:7px 12px;}
+  .stamp{
+    position:static;
+    width:auto;height:auto;
+    align-self:flex-start;
+    border:1px solid rgba(201,94,75,.35);
+    border-radius:999px;
+    transform:none;
+    padding:7px 12px;
+    margin:0 max(0px,calc((100% - 1120px)/2)) 10px;
+    background:#fff1ed;
+    font-size:13px;
+  }
+  .stamp br{display:none;}
+  .point{background:rgba(255,255,255,.72);padding:14px 16px;border-radius:16px;}
+  .point .dot{border:0;width:30px;height:30px;font-size:15px;}
+  .point .ptx{font-size:16px;font-weight:600;}
+
+  .toc-list{gap:10px;}
+  .toc-item{
+    border:1px solid rgba(40,98,79,.14);
+    box-shadow:0 8px 22px rgba(31,54,45,.07);
+    padding:14px 16px;
+    min-height:72px;
+  }
+  .toc-num{border:0;width:42px;height:42px;font-size:18px;}
+  .toc-item .tx{font-size:17px;}
+  @media(hover:hover){
+    .toc-item:hover{
+      background:#fff;
+      transform:translateY(-2px);
+      box-shadow:0 14px 30px rgba(31,54,45,.12);
+    }
+  }
+
+  .call,.emerg .ecall{
+    border:0;
+    border-radius:12px;
+    box-shadow:none;
+    min-height:46px;
+  }
+  .call{font-size:15px;padding:10px 14px;}
+  .call.map{background:#edf3ee;}
+  .call.tel::before{display:none;}
+  .call:active,.nbtn:active{transform:scale(.97);box-shadow:none;}
+  .emerg{background:#fff4f1;border:1px solid rgba(201,94,75,.28);padding:20px;}
+
+  .srow{border:0;box-shadow:0 8px 24px rgba(31,54,45,.08);}
+  .stime{border:0;flex-basis:92px;}
+  .sbody{padding:13px 16px;}
+
+  .hint{
+    border:0;
+    border-radius:999px;
+    box-shadow:0 12px 28px rgba(40,98,79,.22);
+    padding:12px 20px;
+  }
+  .cover{justify-content:center;align-items:center;}
+  .cover .big-emoji{
+    display:grid;place-items:center;
+    width:82px;height:82px;
+    background:#fff;border-radius:26px;
+    box-shadow:var(--shadow);
+    font-size:44px;
+  }
+  .cover .brandline{font-size:14px;letter-spacing:.12em;}
+  .cover h1.title{font-size:clamp(46px,9vw,92px);}
+
+  .nav{
+    position:absolute;
+    left:50%;right:auto;bottom:max(12px,env(safe-area-inset-bottom));
+    transform:translateX(-50%);
+    width:min(calc(100% - 24px),720px);
+    height:68px;
+    padding:8px 10px;
+    border:1px solid rgba(255,255,255,.14);
+    border-radius:22px;
+    background:rgba(25,48,40,.94);
+    box-shadow:0 16px 44px rgba(19,39,32,.3);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+  }
+  .nbtn,#prev,#next,.nbtn.home{
+    width:50px;height:50px;
+    padding:0;border:0;border-radius:15px;
+    background:rgba(255,255,255,.96);
+    color:var(--green);
+    box-shadow:none;
+  }
+  #prev .arr,#next .arr{font-size:28px;margin:0;}
+  .progress{font-size:13px;gap:7px;}
+  .bar{width:min(210px,36vw);height:5px;background:rgba(255,255,255,.2);}
+  .bar i{background:#f2be63;}
+
+  @media(min-width:768px){
+    body{display:block;padding:0;background-color:#e8eee9;}
+    .stage{width:100%;height:100dvh!important;border:0;}
+    .slide{
+      padding:clamp(34px,5vh,64px) clamp(44px,6vw,100px) 116px;
+    }
+    .slide.active:not(.cover){
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      align-content:start;
+      column-gap:20px;
+    }
+    .slide.active:not(.cover) > .eyebrow,
+    .slide.active:not(.cover) > .stamp,
+    .slide.active:not(.cover) > .title,
+    .slide.active:not(.cover) > .subtitle,
+    .slide.active:not(.cover) > .lead,
+    .slide.active:not(.cover) > .kicker,
+    .slide.active:not(.cover) > .points,
+    .slide.active:not(.cover) > .toc-list,
+    .slide.active:not(.cover) > .sched,
+    .slide.active:not(.cover) > .duo,
+    .slide.active:not(.cover) > .emerg,
+    .slide.active:not(.cover) > .note{
+      grid-column:1/-1;
+    }
+    .slide.active:not(.cover) > .eyebrow,
+    .slide.active:not(.cover) > .stamp{margin-left:0;}
+    .slide.active:not(.cover) > .card{width:100%;max-width:none;margin-left:0;margin-right:0;}
+    .toc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+    .sched{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
+    .duo{flex-direction:row;}
+    .nav{height:70px;}
+    .nav #prev,.nav #next,.nav .nbtn.home{
+      width:auto;height:50px;border-radius:15px;padding:0 18px;font-size:16px;
+    }
+    .nav #prev .lbl,.nav #next .lbl{display:inline;}
+    .nav #prev .arr,.nav #next .arr{font-size:22px;}
+    .bar{width:240px;}
+  }
+
+  @media(min-width:1180px) and (min-aspect-ratio:16/10){
+    .slide{padding-top:clamp(30px,4vh,48px);}
+    .slide.active:not(.cover){
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      column-gap:18px;
+    }
+    .slide.active:not(.cover) > .eyebrow,
+    .slide.active:not(.cover) > .stamp,
+    .slide.active:not(.cover) > .title,
+    .slide.active:not(.cover) > .subtitle,
+    .slide.active:not(.cover) > .lead,
+    .slide.active:not(.cover) > .kicker,
+    .slide.active:not(.cover) > .points,
+    .slide.active:not(.cover) > .toc-list,
+    .slide.active:not(.cover) > .sched,
+    .slide.active:not(.cover) > .duo,
+    .slide.active:not(.cover) > .emerg,
+    .slide.active:not(.cover) > .note{
+      grid-column:1/-1;
+    }
+    .toc-list,.sched{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .card{padding:20px;}
+  }
+
+  @media(max-width:420px){
+    .slide{padding-left:16px;padding-right:16px;}
+    .cover .brandline{font-size:12px;letter-spacing:.08em;}
+    .cover .who{font-size:14px;}
+    .srow{display:grid;grid-template-columns:76px 1fr;}
+    .stime{min-width:0;flex-basis:auto;font-size:13px;}
+    .sbody .act{font-size:15px;}
+    .calls{display:grid;grid-template-columns:1fr;}
+    .call{justify-content:center;width:100%;}
+    .nav{width:calc(100% - 16px);bottom:max(8px,env(safe-area-inset-bottom));}
+    .nbtn,#prev,#next,.nbtn.home{width:48px;height:48px;}
+    .bar{width:min(110px,28vw);}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;}
+  }
 </style>
 </head>
 <body>
@@ -1058,8 +1332,8 @@
   </section>
 
   <!-- 導覽 -->
-  <div class="nav">
-    <button class="nbtn home" onclick="goTo(1)" title="目錄">📖</button>
+  <div class="nav" role="navigation" aria-label="教材頁面導覽">
+    <button class="nbtn home" id="menuButton" title="前往目錄" aria-label="前往目錄">📖</button>
     <button class="nbtn" id="prev" onclick="prev()" aria-label="上一頁"><span class="arr">‹</span><span class="lbl">上一頁</span></button>
     <div class="progress">
       <span id="counter">1 / 10</span>
@@ -1082,15 +1356,27 @@
   }
   function next(){if(cur<slides.length-1){cur++;render();}}
   function prev(){if(cur>0){cur--;render();}}
-  function goTo(i){cur=i;render();}
+  function goTo(i){
+    const target=Math.max(0,Math.min(Number(i),slides.length-1));
+    cur=target;
+    render();
+  }
   function goId(id){const t=document.getElementById(id);const i=slides.indexOf(t);if(i>=0)goTo(i);}
   document.querySelectorAll('.toc-item[data-go]').forEach(el=>{
+    el.setAttribute('role','button');
+    el.setAttribute('tabindex','0');
     el.addEventListener('click',()=>goId(el.dataset.go));
+    el.addEventListener('keydown',e=>{
+      if(e.key==='Enter'||e.key===' '){e.preventDefault();goId(el.dataset.go);}
+    });
   });
+  const menuIndex=slides.findIndex(slide=>slide.querySelector('.toc-list'));
+  document.getElementById('menuButton').addEventListener('click',()=>goTo(menuIndex>=0?menuIndex:0));
   document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='PageDown')next();
     if(e.key==='ArrowLeft'||e.key==='PageUp')prev();
     if(e.key==='Home')goTo(0);
+    if(e.key==='Escape'&&menuIndex>=0)goTo(menuIndex);
   });
   // 觸控左右滑
   let sx=0,sy=0;
@@ -1099,7 +1385,7 @@
   stage.addEventListener('touchend',e=>{
     const dx=e.changedTouches[0].clientX-sx;
     const dy=e.changedTouches[0].clientY-sy;
-    if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){dx<0?next():prev();}
+    if(Math.abs(dx)>72&&Math.abs(dx)>Math.abs(dy)*1.8){dx<0?next():prev();}
   },{passive:true});
   render();
 </script>
