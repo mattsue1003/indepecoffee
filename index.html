@@ -55,6 +55,7 @@
     .point{margin-bottom:10px;}
     .slide-body{column-count:2;column-gap:26px;width:100%;}
     .slide-body>*{break-inside:avoid;-webkit-column-break-inside:avoid;}
+    .srow{break-inside:avoid;-webkit-column-break-inside:avoid;}
     .slide.cover .slide-body,
     .slide.no-col .slide-body{column-count:1;}
     .card{margin-bottom:14px;padding:16px 20px;}
@@ -355,6 +356,31 @@
   }
 
   .kicker{font-size:15px;font-weight:800;color:var(--green);margin:2px 0 12px;}
+
+  /* 活動流程時間軸 */
+  .sched{display:flex;flex-direction:column;gap:11px;margin-top:4px;}
+  .srow{
+    display:flex;align-items:stretch;gap:0;
+    background:var(--card);
+    border:3px solid var(--line);
+    box-shadow:4px 4px 0 rgba(43,38,32,.8);
+    overflow:hidden;
+  }
+  .srow.rest{background:#f6edd6;}
+  .stime{
+    flex:0 0 96px;
+    background:var(--green);color:#fff8e7;
+    font-size:15px;font-weight:900;line-height:1.3;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:10px 6px;
+    border-right:3px solid var(--line);
+  }
+  .srow.rest .stime{background:var(--gold);color:#2b2620;}
+  .sbody{flex:1 1 auto;padding:10px 13px;min-width:0;}
+  .sbody .act{font-size:17px;font-weight:900;line-height:1.3;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .sbody .how{font-size:14px;font-weight:700;color:var(--ink-soft);line-height:1.55;margin-top:4px;}
+  .sbody .who2{font-size:13px;font-weight:800;color:var(--green);margin-top:5px;}
+  .srow.rest .sbody .who2{color:#9a7b1e;}
   .hint{
     margin-top:30px;font-size:16px;font-weight:800;
     color:#fff8e7;background:var(--green);
@@ -377,6 +403,69 @@
     <p class="lead" style="max-width:520px">在社區裡安心生活，<strong>你不需要一個人撐著</strong>。<br>今天我們一起認識，南桃園可以陪你的資源。</p>
     <div class="who">精障朋友 × 社區長輩　共融活動<br>中壢・平鎮・楊梅・龍潭一帶</div>
     <div class="hint" onclick="next()">點「下一頁」開始 ↓</div>
+  </section>
+
+  <!-- 1.5 活動流程 -->
+  <section class="slide" id="sec-schedule">
+    <span class="eyebrow gold">🗓 活動流程</span>
+    <h2 class="subtitle">今天的時間表</h2>
+    <div class="sched">
+      <div class="srow">
+        <div class="stime">13:30<br>13:50</div>
+        <div class="sbody">
+          <div class="act">🙋 報到與暖身互動</div>
+          <div class="how">破冰遊戲、互相認識</div>
+          <div class="who2">鍾孟修・職能治療師</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="stime">13:50<br>14:20</div>
+        <div class="sbody">
+          <div class="act">🏃 體適能活動</div>
+          <div class="how">長者與學員共同參與運動</div>
+          <div class="who2">鍾孟修・職能治療師</div>
+        </div>
+      </div>
+      <div class="srow rest">
+        <div class="stime">14:20<br>14:30</div>
+        <div class="sbody">
+          <div class="act">☕ 休息</div>
+          <div class="how">短暫休息</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="stime">14:30<br>14:40</div>
+        <div class="sbody">
+          <div class="act">🫘 咖啡文化介紹</div>
+          <div class="how">咖啡知識與示範</div>
+          <div class="who2">呂協翰・總監／咖啡師</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="stime">14:40<br>15:20</div>
+        <div class="sbody">
+          <div class="act">☕ 手沖咖啡 DIY</div>
+          <div class="how">分組實作體驗</div>
+          <div class="who2">呂協翰・總監／咖啡師</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="stime">15:20<br>16:00</div>
+        <div class="sbody">
+          <div class="act">💬 咖啡分享交流／資源分享</div>
+          <div class="how">與長輩共同品嚐咖啡，同時讓學員了解相關網絡資源或轉銜資源</div>
+          <div class="who2">鍾孟修・職能治療師</div>
+        </div>
+      </div>
+      <div class="srow">
+        <div class="stime">16:00<br>16:30</div>
+        <div class="sbody">
+          <div class="act">🧹 社區環境維護</div>
+          <div class="how">學員協助據點整理環境</div>
+          <div class="who2">據點負責人／鍾孟修・職能治療師</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- 2 目錄 -->
