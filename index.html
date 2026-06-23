@@ -463,7 +463,9 @@
   .card{
     padding:clamp(18px,2.2vw,26px);
     margin-bottom:16px;
-    overflow:hidden;
+    overflow:visible;
+    height:auto;
+    min-height:min-content;
   }
   .card h3{font-size:clamp(19px,2vw,23px);line-height:1.4;}
   .card p{font-size:clamp(15px,1.5vw,17px);line-height:1.8;font-weight:500;}
@@ -577,7 +579,10 @@
       display:grid;
       grid-template-columns:repeat(2,minmax(0,1fr));
       align-content:start;
+      align-items:start;
+      grid-auto-rows:max-content;
       column-gap:20px;
+      row-gap:18px;
     }
     .slide.active:not(.cover) > .eyebrow,
     .slide.active:not(.cover) > .stamp,
@@ -595,7 +600,12 @@
     }
     .slide.active:not(.cover) > .eyebrow,
     .slide.active:not(.cover) > .stamp{margin-left:0;}
-    .slide.active:not(.cover) > .card{width:100%;max-width:none;margin-left:0;margin-right:0;}
+    .slide.active:not(.cover) > .card{
+      width:100%;
+      max-width:none;
+      margin:0;
+      align-self:start;
+    }
     .toc-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
     .sched{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));}
     .duo{flex-direction:row;}
@@ -611,7 +621,7 @@
   @media(min-width:1180px) and (min-aspect-ratio:16/10){
     .slide{padding-top:clamp(30px,4vh,48px);}
     .slide.active:not(.cover){
-      grid-template-columns:repeat(3,minmax(0,1fr));
+      grid-template-columns:repeat(6,minmax(0,1fr));
       column-gap:18px;
     }
     .slide.active:not(.cover) > .eyebrow,
@@ -628,6 +638,10 @@
     .slide.active:not(.cover) > .note{
       grid-column:1/-1;
     }
+    .slide.active:not(.cover) > .card{grid-column:span 2;}
+    .slide.active:not(.cover) > .card.row-center-one{grid-column:3 / span 2;}
+    .slide.active:not(.cover) > .card.row-center-left{grid-column:2 / span 2;}
+    .slide.active:not(.cover) > .card.row-center-right{grid-column:4 / span 2;}
     .toc-list,.sched{grid-template-columns:repeat(3,minmax(0,1fr));}
     .card{padding:20px;}
   }
@@ -761,7 +775,7 @@
     <span class="eyebrow gold">📖 今天的內容</span>
     <h2 class="subtitle">今天帶你認識的資源</h2>
     <div class="toc-list">
-      <div class="toc-item" data-go="sec-coffee"><div class="toc-num">☕</div><div class="tx">來學手沖咖啡<small>一技之長＋健康喝法</small></div></div>
+      <div class="toc-item" data-go="sec-coffee"><div class="toc-num">☕</div><div class="tx">來學手沖咖啡<small>沖煮步驟＋認識咖啡豆</small></div></div>
       <div class="toc-item" data-go="sec-self"><div class="toc-num">1</div><div class="tx">自立生活，由你做主<small>同儕支持＋個人助理</small></div></div>
       <div class="toc-item" data-go="sec-day"><div class="toc-num">2</div><div class="tx">白天去哪走走<small>會所與社區復健（不用住）</small></div></div>
       <div class="toc-item" data-go="sec-job"><div class="toc-num">3</div><div class="tx">想找工作、學技能<small>支持性、庇護工場、職務再設計</small></div></div>
@@ -776,7 +790,7 @@
   </section>
 
   <!-- 2.3 手沖咖啡 一技之長 -->
-  <section class="slide" id="sec-coffee">
+  <section class="slide" id="sec-brew">
     <div class="stamp">學一技<br>之長</div>
     <span class="eyebrow gold">☕ 來學手沖咖啡</span>
     <h2 class="subtitle">六步驟，沖出一杯好咖啡</h2>
@@ -808,6 +822,89 @@
     <p class="note">以上為新手參考參數，水溫、比例、研磨可依個人口味調整，「自己覺得好喝」最重要。</p>
   </section>
 
+  <!-- 2.4 阿拉比卡與羅布斯塔 -->
+  <section class="slide" id="sec-coffee">
+    <span class="eyebrow green">🫘 咖啡豆入門</span>
+    <h2 class="subtitle">阿拉比卡與羅布斯塔，哪個比較好？</h2>
+    <p class="lead" style="margin-bottom:14px">正確名稱是<strong>阿拉比卡（Arabica）</strong>與<strong>羅布斯塔（Robusta）</strong>。沒有絕對輸贏，要看你喜歡的味道與沖煮方式。</p>
+    <div class="card">
+      <span class="tag green">香氣細緻</span>
+      <h3>🌸 阿拉比卡 Arabica</h3>
+      <p>通常香氣較豐富，容易出現花香、水果、柑橘、堅果或巧克力風味，酸甜感較明顯，苦味與咖啡因通常較低。<b>精品手沖多以阿拉比卡為主。</b></p>
+      <p class="meta">適合：喜歡香氣、果酸、甜感與風味變化的人</p>
+    </div>
+    <div class="card">
+      <span class="tag red">濃厚有力</span>
+      <h3>🍫 羅布斯塔 Robusta</h3>
+      <p>口感通常較厚重，苦味、木質、可可與烘烤感較明顯，咖啡因通常較高，常用在義式配方與即溶咖啡，能增加 crema 與濃度。品質好的<b>精品羅布斯塔</b>也可以乾淨、甜而有特色。</p>
+      <p class="meta">適合：喜歡濃、苦、厚實口感，或加牛奶飲用的人</p>
+    </div>
+    <div class="card" style="background:#eef6f1;border-color:var(--green)">
+      <h3>✅ 新手怎麼選</h3>
+      <p>第一次買手沖豆，可先選<b>單品阿拉比卡、中淺焙、水洗處理</b>，味道通常比較乾淨、容易辨認。若不喜歡酸味，可改選<b>中焙巴西豆</b>，常有堅果、巧克力與焦糖感。</p>
+    </div>
+  </section>
+
+  <!-- 2.5 咖啡處理法 -->
+  <section class="slide" id="sec-process">
+    <span class="eyebrow gold">☀️ 水洗・日曬・蜜處理</span>
+    <h2 class="subtitle">處理法，是果實採收後怎麼變成生豆</h2>
+    <p class="lead" style="margin-bottom:14px">它不是把烘好的豆子拿去洗或曬，而是咖啡果實採收後，<strong>如何去除果皮果肉與乾燥</strong>。處理法會影響風味，但產地、品種、烘焙與沖煮同樣重要。</p>
+    <div class="card">
+      <span class="tag green">乾淨清爽</span>
+      <h3>💧 水洗 Washed</h3>
+      <p>先去除果皮果肉，經發酵與水洗後再乾燥。風味通常較乾淨、明亮，酸質清楚，容易喝出產地與品種特色。</p>
+      <p class="meta">聯想：茶感、柑橘、花香｜新手最好理解</p>
+    </div>
+    <div class="card">
+      <span class="tag red">香甜奔放</span>
+      <h3>☀️ 日曬 Natural</h3>
+      <p>咖啡果實整顆直接乾燥，再去除乾果皮。通常甜感較高、果香濃郁、口感厚，可能出現莓果、熱帶水果或酒香；處理不佳也較容易有過度發酵味。</p>
+      <p class="meta">聯想：果乾、莓果、酒香｜喜歡濃郁水果味可選</p>
+    </div>
+    <div class="card">
+      <span class="tag">甜感平衡</span>
+      <h3>🍯 蜜處理 Honey</h3>
+      <p>去掉果皮後，保留部分果膠一起乾燥；名稱來自果膠黏稠如蜂蜜，<b>不是加入蜂蜜</b>。風味常介於水洗與日曬之間，兼具乾淨度、甜感與圓潤口感。</p>
+      <p class="meta">聯想：焦糖、熟果、圓潤甜感｜想折衷可選</p>
+    </div>
+  </section>
+
+  <!-- 2.55 選購咖啡豆 -->
+  <section class="slide" id="sec-buy">
+    <span class="eyebrow green">🛍 新手買豆指南</span>
+    <h2 class="subtitle">哪裡買，才不容易踩雷？</h2>
+    <p class="lead" style="margin-bottom:14px">優先找<strong>有標示烘焙日期、產地、處理法與烘焙度</strong>的自家烘焙店。先買 100～250 克小包裝，喝完再換下一種，比一次囤很多更容易保持新鮮。</p>
+    <div class="card">
+      <span class="tag green">實體店最友善</span>
+      <h3>🏪 到住家附近的自家烘焙店</h3>
+      <p>直接告訴店員：「我要手沖、不要太酸／喜歡果香／喜歡堅果巧克力」，請對方推薦。能聞豆子、問沖法，也可少量試買，是新手最省力的方式。</p>
+    </div>
+    <div class="card">
+      <span class="tag">線上選擇多</span>
+      <h3>🌐 台灣官方購買管道</h3>
+      <p>以下網站會清楚列出產地、處理法或烘焙度，可用來練習看標籤與比較風味；不代表只有這幾家值得購買。</p>
+      <div class="calls">
+        <a class="call map" href="https://www.oklaocoffee.com/coffee/lists?continent=8" target="_blank" rel="noopener">歐客佬豆單 ↗</a>
+        <a class="call map" href="https://www.cometrue-coffee.com/store/categories/coffee-beans" target="_blank" rel="noopener">成真咖啡 ↗</a>
+        <a class="call map" href="https://simplekaffa.com/product/category1/1" target="_blank" rel="noopener">興波咖啡 ↗</a>
+      </div>
+    </div>
+    <div class="card">
+      <span class="tag red">看標籤</span>
+      <h3>🔎 買之前確認五件事</h3>
+      <div class="pill-row">
+        <span class="pill">烘焙日期</span>
+        <span class="pill">國家／產區</span>
+        <span class="pill">水洗／日曬／蜜處理</span>
+        <span class="pill">淺／中／深焙</span>
+        <span class="pill">風味描述</span>
+      </div>
+      <p class="meta">手沖新手懶人選擇：阿拉比卡單品豆＋中淺焙＋水洗；怕酸則選中焙巴西豆或標示堅果、巧克力、焦糖風味的豆子。</p>
+    </div>
+    <p class="note">豆袋上的「草莓、蜂蜜、巧克力」通常是品飲時聯想到的天然風味，不表示真的加入這些材料；若有額外加香，應另外標示。</p>
+  </section>
+
   <!-- 2.6 選好豆 vs 三合一 -->
   <section class="slide">
     <span class="eyebrow green">☕ 怎麼選</span>
@@ -837,13 +934,13 @@
     <div class="card">
       <span class="tag">適量</span>
       <h3>☕ 一天大概多少</h3>
-      <p>一般成人一天咖啡因建議不超過約 <b>300～400 毫克</b>（大約 2～3 杯中杯）。會心悸、手抖、胃不舒服就要減量。</p>
+      <p>依衛福部建議，一般成人一天咖啡因攝取量<b>不宜超過 300 毫克</b>。每杯含量會因豆量與沖法差很多，請看產品標示；會心悸、手抖、胃不舒服就要減量。</p>
     </div>
     <div class="card">
       <span class="tag red">很重要</span>
       <h3>💊 有吃精神科藥物嗎？</h3>
       <p>咖啡因可能和部分精神科藥物互相影響——例如<b>安眠、鎮靜藥</b>的效果可能被咖啡因抵消；某些<b>抗精神病藥</b>（如 Clozapine）和咖啡因併用，血中濃度可能升高、更想睡或頭暈。</p>
-      <p class="meta">原則：吃藥配白開水，吃完藥<b>間隔 1 小時以上</b>再喝咖啡。<b>你的狀況怎麼喝、能不能喝，請問你的醫師或藥師。</b></p>
+      <p class="meta">原則：藥物配白開水。不同藥物沒有通用的「間隔幾小時就安全」規則；若服用 Clozapine、鋰鹽、安眠或鎮靜藥物，請先詢問醫師或藥師，也不要突然大幅改變每天的咖啡因攝取量。</p>
     </div>
     <div class="card">
       <span class="tag green">顧睡眠</span>
@@ -909,9 +1006,9 @@
     <div class="card" style="margin-top:4px">
       <h3>＠ 想申請？這樣開始</h3>
       <p>同儕支持不用另外申請，它<b>包含在「自立生活支持服務」裡</b>。資格：<b>年滿18歲、實際居住桃園、領有身障證明</b>，準備一份簡單的生活計畫構想，經評估有意願即可。</p>
-      <p class="meta">承辦：桃園市自閉症協進會（陳社工）03-2170919｜需求評估中心 03-3680711</p>
+      <p class="meta">承辦：桃園市自閉症協進會 03-338-8819｜需求評估中心 03-368-0711</p>
       <div class="calls">
-        <a class="call tel" href="tel:032170919">📞 承辦單位 03-217-0919</a>
+        <a class="call tel" href="tel:033388819">📞 承辦單位 03-338-8819</a>
         <a class="call tel" href="tel:033680711">📞 需求評估 03-368-0711</a>
       </div>
     </div>
@@ -934,20 +1031,25 @@
       <h3>伊甸沐陽會所</h3>
       <p>日間活動、社區參與與支持性服務。</p>
       <p class="meta">📍 平鎮區大連街49號2樓｜9:00–17:00</p>
-      <div class="calls"><a class="call tel" href="tel:0334390370">📞 03-439-0370 #16</a></div>
+      <div class="calls"><a class="call tel" href="tel:034390370">📞 03-439-0370 #16</a></div>
     </div>
     <div class="card">
       <span class="tag green">會所</span>
       <h3>欣晴會所</h3>
       <p>日間活動、社交練習與就業前準備。</p>
       <p class="meta">📍 中壢區元化路216號10樓｜9:00–16:00</p>
-      <div class="calls"><a class="call tel" href="tel:0334250581">📞 03-425-0581</a></div>
+      <div class="calls"><a class="call tel" href="tel:034250581">📞 03-425-0581</a></div>
     </div>
     <div class="card">
       <span class="tag">日間</span>
       <h3>社區復健中心（日間型）</h3>
       <p>佳欣・忻樂・大石門等中心，提供生活與工作技能訓練、職前準備、社交活動，<b>白天來、晚上回家</b>。</p>
-      <p class="meta">📞 佳欣 03-445-80289｜忻樂 03-442-63799｜大石門 03-447-14189</p>
+      <p class="meta">佳欣 03-458-0289｜忻樂 03-426-3799｜大石門 03-471-4189</p>
+      <div class="calls">
+        <a class="call tel" href="tel:034580289">📞 佳欣 03-458-0289</a>
+        <a class="call tel" href="tel:034263799">📞 忻樂 03-426-3799</a>
+        <a class="call tel" href="tel:034714189">📞 大石門 03-471-4189</a>
+      </div>
     </div>
   </section>
 
@@ -962,8 +1064,8 @@
       <p>服務<b>桃園、八德、龜山、蘆竹、大溪、大園、復興</b>。</p>
       <p class="meta">📍 桃園區縣府路1號3樓</p>
       <div class="calls">
-        <a class="call tel" href="tel:0333338140">📞 03-333-3814</a>
-        <a class="call tel" href="tel:0333338700">📞 03-333-3870</a>
+        <a class="call tel" href="tel:033333814">📞 03-333-3814</a>
+        <a class="call tel" href="tel:033333870">📞 03-333-3870</a>
       </div>
     </div>
     <div class="card">
@@ -972,8 +1074,8 @@
       <p>服務<b>中壢、平鎮、龍潭、楊梅、新屋、觀音</b>。個管員陪你評估能力 → 職業輔導評量 → 媒合工作或職訓。</p>
       <p class="meta">📍 中壢區明德路60號4樓</p>
       <div class="calls">
-        <a class="call tel" href="tel:0340201220">📞 03-402-0122</a>
-        <a class="call tel" href="tel:0340201360">📞 03-402-0136</a>
+        <a class="call tel" href="tel:034020122">📞 03-402-0122</a>
+        <a class="call tel" href="tel:034020136">📞 03-402-0136</a>
       </div>
     </div>
     <div class="card">
@@ -1022,7 +1124,7 @@
       <h3>📞 去哪裡辦</h3>
       <p>主管機關是<b>桃園市勞動局身障就業科</b>，可直接洽詢或請職重個管員協助提出。</p>
       <p class="meta">📍 桃園區縣府路1號3、4樓｜可透過北區 03-333-3814、南區 03-402-0122 職重窗口提出</p>
-      <div class="calls"><a class="call tel" href="tel:0333322101">📞 勞動局 03-3322101</a></div>
+      <div class="calls"><a class="call tel" href="tel:033322101">📞 勞動局 03-3322101</a></div>
     </div>
   </section>
 
@@ -1053,7 +1155,7 @@
     </div>
     <div class="card" style="background:#fff8e7">
       <p class="lead" style="font-size:16px">對象：<b>7歲以上、住桃園、有身障證明</b>。先做需求評估，再幫你安排或轉介。</p>
-      <div class="calls"><a class="call tel" href="tel:0333322101">📞 社會局身障科 03-3322101</a></div>
+      <div class="calls"><a class="call tel" href="tel:033322101">📞 社會局身障科 03-3322101</a></div>
     </div>
   </section>
 
@@ -1073,7 +1175,7 @@
     <div class="card">
       <span class="tag green">長照3.0</span>
       <h3>🤝 精障朋友還有專屬安排</h3>
-      <p>2026年上路的長照3.0特別納入精神障礙者：<b>由社區心理衛生中心提供社區關懷訪視</b>，定期有人關心、連結資源。</p>
+      <p>2026年上路的長照3.0設有「身心障礙者長期照顧」專章，強調身障平權與個別化服務。<b>是否能使用長照，仍要有實際失能需求並經照管中心評估</b>，不是只憑診斷或身障證明自動核定。</p>
     </div>
     <div class="card">
       <h3>📞 怎麼申請</h3>
@@ -1104,7 +1206,7 @@
       <h3>📝 怎麼申請</h3>
       <p>下載「社區心理衛生中心專業服務申請表」→ 填好 Email 寄出 → 中心督導評估。</p>
       <p class="meta">林職能治療師｜03-3134995 分機113</p>
-      <div class="calls"><a class="call tel" href="tel:0331349950113">📞 撥打洽詢</a></div>
+      <div class="calls"><a class="call tel" href="tel:033134995">📞 03-313-4995（轉 113）</a></div>
     </div>
   </section>
 
@@ -1142,8 +1244,11 @@
     <div class="card">
       <span class="tag red">諮詢總窗口</span>
       <h3>☎ 社區心理衛生中心</h3>
-      <p>心理諮詢、資源連結與轉介的總窗口。<b>不知道該找誰時，先打這裡。</b>不知道號碼時，撥安心專線 1925 也能協助連結。</p>
-      <div class="calls"><a class="call tel" href="tel:1925">📞 安心專線 1925</a></div>
+      <p>桃園市社區心理衛生中心提供心理衛生諮詢、資源連結與轉介。<b>平日不知道該找誰時，可先打中心；夜間或情緒危機則可撥 1925。</b></p>
+      <div class="calls">
+        <a class="call tel" href="tel:033325880">📞 桃園心衛中心 03-332-5880</a>
+        <a class="call tel" href="tel:1925">📞 24 小時安心專線 1925</a>
+      </div>
     </div>
     <div class="card">
       <span class="tag green">精神・情緒</span>
@@ -1172,7 +1277,7 @@
     <div class="card">
       <span class="tag">租金打折</span>
       <h3>🏢 社會住宅包租代管</h3>
-      <p>政府委託業者媒合房子，由業者居中管理，房東較安心。<b>身障者屬弱勢戶，租金約5～7折</b>，差額由政府補助。可上「內政部不動產資訊平台」或591社宅專區查詢。</p>
+      <p>政府委託業者媒合與管理住宅，降低房東與房客的溝通負擔。身障者可列為經濟或社會弱勢身分之一，但<b>實際租金與補助依房源、資格及當期方案核定</b>，不是所有案件都固定為 5～7 折。</p>
     </div>
     <div class="card">
       <span class="tag red">每月補貼</span>
@@ -1204,7 +1309,7 @@
       <span class="tag">突發急難</span>
       <h3>🆘 急難救助</h3>
       <p>遇到重大傷病、失業、變故導致生活陷困，可向社會局或區公所申請急難救助金，幫你暫渡難關。</p>
-      <div class="calls"><a class="call tel" href="tel:0333322101">📞 社會局 03-3322101</a></div>
+      <div class="calls"><a class="call tel" href="tel:033322101">📞 社會局 03-3322101</a></div>
     </div>
     <div class="card">
       <span class="tag green">每月補助</span>
@@ -1344,7 +1449,26 @@
 </div>
 
 <script>
+  // 教學順序：先認識豆子，再看處理法與選購，最後進入實際沖煮。
+  const buySlide=document.getElementById('sec-buy');
+  const brewSlide=document.getElementById('sec-brew');
+  if(buySlide&&brewSlide)buySlide.insertAdjacentElement('afterend',brewSlide);
+
   const slides=[...document.querySelectorAll('.slide')];
+
+  // 桌機三欄排版：最後一排不足三張時，自動置中，避免畫面重心偏左。
+  slides.forEach(slide=>{
+    const cards=[...slide.children].filter(el=>el.classList?.contains('card'));
+    cards.forEach(card=>card.classList.remove('row-center-one','row-center-left','row-center-right'));
+    const remainder=cards.length%3;
+    if(remainder===1&&cards.length){
+      cards[cards.length-1].classList.add('row-center-one');
+    }else if(remainder===2){
+      cards[cards.length-2].classList.add('row-center-left');
+      cards[cards.length-1].classList.add('row-center-right');
+    }
+  });
+
   let cur=0;
   function render(){
     slides.forEach((s,i)=>s.classList.toggle('active',i===cur));
